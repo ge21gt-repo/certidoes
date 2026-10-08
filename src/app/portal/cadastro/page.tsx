@@ -12,7 +12,7 @@ export default async function CadastroPage() {
     <div className="max-w-md mx-auto">
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
         <div className="mb-6">
-          <UserCog className="h-8 w-8 text-emerald-700 mb-2" />
+          <UserCog className="h-8 w-8 text-brand-600 mb-2" />
           <h1 className="text-xl font-bold text-gray-900">Meu cadastro</h1>
           <p className="text-sm text-gray-500 mt-1">
             Nome e CPF vêm da identidade validada pelo gov.br e não podem ser

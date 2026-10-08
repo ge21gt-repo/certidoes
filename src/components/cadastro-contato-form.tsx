@@ -104,7 +104,7 @@ export function CadastroContatoForm({
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-emerald-700 text-white py-2.5 rounded-md text-sm font-medium hover:bg-emerald-800 disabled:opacity-50 flex items-center justify-center gap-2"
+        className="w-full bg-brand-800 text-white py-2.5 rounded-md text-sm font-medium hover:bg-brand-900 disabled:opacity-50 flex items-center justify-center gap-2"
       >
         {loading && <Loader2 className="h-4 w-4 animate-spin" />}
         {labelBotao}

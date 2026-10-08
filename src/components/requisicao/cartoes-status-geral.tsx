@@ -83,7 +83,7 @@ export function CartoesStatusGeral({
                 aria-current={selecionado ? "true" : undefined}
                 className={`flex h-full items-center gap-3 rounded-lg border p-4 ${
                   selecionado
-                    ? "border-emerald-600 bg-emerald-50 ring-2 ring-emerald-600"
+                    ? "border-brand-600 bg-brand-50 ring-2 ring-brand-600"
                     : "border-gray-200 bg-white hover:border-gray-400"
                 }`}
               >

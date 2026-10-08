@@ -493,7 +493,7 @@ export function RequisicaoForm({
         </p>
         <Link
           href={`/portal/requisicoes/${encaminhado.id}#conversa`}
-          className="mt-5 inline-flex items-center rounded-md bg-emerald-700 px-4 py-2 text-sm text-white hover:bg-emerald-800"
+          className="mt-5 inline-flex items-center rounded-md bg-brand-800 px-4 py-2 text-sm text-white hover:bg-brand-900"
         >
           Abrir conversa
         </Link>
@@ -545,7 +545,7 @@ export function RequisicaoForm({
           </p>
           <Link
             href={painelHref}
-            className="inline-block mt-5 bg-emerald-700 text-white px-5 py-2 rounded-md text-sm hover:bg-emerald-800"
+            className="inline-block mt-5 bg-brand-800 text-white px-5 py-2 rounded-md text-sm hover:bg-brand-900"
           >
             {painelLabel}
           </Link>
@@ -563,7 +563,7 @@ export function RequisicaoForm({
         </p>
         <Link
           href={painelHref}
-          className="inline-block mt-4 bg-emerald-700 text-white px-5 py-2 rounded-md text-sm hover:bg-emerald-800"
+          className="inline-block mt-4 bg-brand-800 text-white px-5 py-2 rounded-md text-sm hover:bg-brand-900"
         >
           {painelLabel}
         </Link>
@@ -616,7 +616,7 @@ export function RequisicaoForm({
           <div
             role="group"
             aria-labelledby="cjt-rep-titulo"
-            className={`${entra} rounded-md border border-emerald-200 bg-emerald-50/60 p-4 space-y-3`}
+            className={`${entra} rounded-md border border-brand-100 bg-brand-50/60 p-4 space-y-3`}
           >
             <h3 id="cjt-rep-titulo" className="text-sm font-semibold text-gray-900">
               Dados de quem você representa
@@ -697,7 +697,7 @@ export function RequisicaoForm({
           />
 
           {perguntaMatriculaAplicavel(form.resultado, form.situacao) && (
-            <div className="border-l-4 border-emerald-200 pl-4">
+            <div className="border-l-4 border-brand-200 pl-4">
               <Pergunta
                 numero="3.1"
                 titulo="Quero informar o número da matrícula?"
@@ -866,7 +866,7 @@ export function RequisicaoForm({
                       type="button"
                       onClick={encaminharDDD}
                       disabled={encaminhando || salvando}
-                      className="inline-flex items-center gap-2 rounded-md bg-emerald-700 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-800 disabled:opacity-50"
+                      className="inline-flex items-center gap-2 rounded-md bg-brand-800 px-4 py-2 text-sm font-medium text-white hover:bg-brand-900 disabled:opacity-50"
                     >
                       {encaminhando && (
                         <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
@@ -928,7 +928,7 @@ export function RequisicaoForm({
       {verCaixa4 && (
         <section className={`${entra} bg-white rounded-lg border border-gray-200 p-6 space-y-5`}>
           <h2 className="font-semibold text-gray-900 flex items-center gap-2">
-            <MapPin className="h-4 w-4 text-emerald-700" />
+            <MapPin className="h-4 w-4 text-brand-600" />
             Imóvel e documentos
           </h2>
 
@@ -965,13 +965,13 @@ export function RequisicaoForm({
                         onClick={() => setSelecionada(p)}
                         className={`w-full text-left border rounded-md p-3 text-sm transition ${
                           ativa
-                            ? "border-emerald-500 bg-emerald-50"
-                            : "border-gray-200 hover:border-emerald-300"
+                            ? "border-brand-600 bg-brand-50"
+                            : "border-gray-200 hover:border-brand-300"
                         }`}
                       >
                         <span className="font-medium text-gray-900 flex items-center gap-2 [overflow-wrap:anywhere]">
                           {p.nomeArea || "Imóvel rural"}
-                          {ativa && <CheckCircle2 className="h-4 w-4 text-emerald-600" />}
+                          {ativa && <CheckCircle2 className="h-4 w-4 text-brand-600" />}
                         </span>
                         <span className="block text-xs text-gray-600 mt-1 [overflow-wrap:anywhere]">
                           Código do imóvel {p.codigoImovel} ·{" "}
@@ -1116,7 +1116,7 @@ export function RequisicaoForm({
             type="button"
             onClick={enviar}
             disabled={enviando}
-            className="w-full bg-emerald-700 text-white py-2.5 rounded-md text-sm font-medium hover:bg-emerald-800 disabled:opacity-50 flex items-center justify-center gap-2"
+            className="w-full bg-brand-800 text-white py-2.5 rounded-md text-sm font-medium hover:bg-brand-900 disabled:opacity-50 flex items-center justify-center gap-2"
           >
             {enviando && <Loader2 className="h-4 w-4 animate-spin" />}
             {reenvio ? "Salvar alterações" : "Enviar requisição"}
@@ -1279,7 +1279,7 @@ function DocField({
   onChange: (f: File | null) => void;
 }) {
   return (
-    <label className="flex items-center gap-3 border border-dashed border-gray-300 rounded-md p-3 cursor-pointer hover:border-emerald-400">
+    <label className="flex items-center gap-3 border border-dashed border-gray-300 rounded-md p-3 cursor-pointer hover:border-brand-300">
       <Upload className="h-5 w-5 text-gray-400" />
       <span className="text-sm text-gray-700 flex-1">
         {label}

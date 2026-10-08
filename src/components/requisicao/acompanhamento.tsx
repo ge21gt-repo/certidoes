@@ -61,7 +61,7 @@ function Marcador({
   }
   if (estado === "ATUAL") {
     return (
-      <span className="relative z-10 grid h-8 w-8 shrink-0 place-items-center rounded-full bg-emerald-700 text-sm font-bold text-white ring-4 ring-emerald-100">
+      <span className="relative z-10 grid h-8 w-8 shrink-0 place-items-center rounded-full bg-brand-800 text-sm font-bold text-white ring-4 ring-brand-100">
         {numero}
       </span>
     );
@@ -194,7 +194,7 @@ export function AcompanhamentoRequisicao({
                     <span className="sr-only"> ({TEXTO_ESTADO[estado]})</span>
                   </span>
                   {estado === "ATUAL" && acomp.detalhe && (
-                    <span className="mt-0.5 px-1 text-[11px] text-emerald-800">
+                    <span className="mt-0.5 px-1 text-[11px] text-brand-700">
                       {acomp.detalhe}
                     </span>
                   )}
@@ -228,7 +228,7 @@ export function AcompanhamentoRequisicao({
                       <span className="sr-only"> ({TEXTO_ESTADO[estado]})</span>
                     </span>
                     {estado === "ATUAL" && acomp.detalhe && (
-                      <span className="block text-xs text-emerald-800">{acomp.detalhe}</span>
+                      <span className="block text-xs text-brand-700">{acomp.detalhe}</span>
                     )}
                   </span>
                 </li>
@@ -250,12 +250,12 @@ export function AcompanhamentoRequisicao({
                       sub.estado === "FEITA"
                         ? "border-emerald-200 bg-emerald-50 text-emerald-900"
                         : sub.estado === "ATUAL"
-                          ? "border-emerald-600 bg-white font-bold text-gray-900 ring-2 ring-emerald-100"
+                          ? "border-brand-600 bg-white font-bold text-gray-900 ring-2 ring-brand-100"
                           : "border-gray-200 bg-white text-gray-600"
                     }`}
                   >
                     {sub.estado === "FEITA" && <Check className="h-3 w-3" aria-hidden="true" />}
-                    {sub.estado === "ATUAL" && <Circle className="h-2.5 w-2.5 fill-emerald-600 text-emerald-600" aria-hidden="true" />}
+                    {sub.estado === "ATUAL" && <Circle className="h-2.5 w-2.5 fill-brand-600 text-brand-600" aria-hidden="true" />}
                     {sub.rotulo}
                     <span className="sr-only"> ({TEXTO_ESTADO[sub.estado]})</span>
                   </li>

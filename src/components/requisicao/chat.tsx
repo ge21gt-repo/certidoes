@@ -17,8 +17,8 @@ const formatoDataHora = new Intl.DateTimeFormat("pt-BR", {
 
 /** Cores por lado: verde no portal do solicitante, azul no backoffice (padrão de cada área). */
 const TEMA: Record<LadoChat, { balao: string; botao: string }> = {
-  SOLICITANTE: { balao: "bg-emerald-700", botao: "bg-emerald-700 hover:bg-emerald-800" },
-  ATENDIMENTO: { balao: "bg-blue-700", botao: "bg-blue-700 hover:bg-blue-800" },
+  SOLICITANTE: { balao: "bg-brand-800", botao: "bg-brand-800 hover:bg-brand-900" },
+  ATENDIMENTO: { balao: "bg-brand-600", botao: "bg-brand-600 hover:bg-brand-700" },
 };
 
 /**

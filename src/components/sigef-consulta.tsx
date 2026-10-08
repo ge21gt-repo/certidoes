@@ -76,10 +76,10 @@ export default function SigefConsulta() {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-emerald-200 p-6">
+    <div className="bg-white rounded-lg shadow-sm border border-brand-100 p-6">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-          <MapPin className="h-5 w-5 text-emerald-600" />
+          <MapPin className="h-5 w-5 text-brand-600" />
           Integração SIGEF/INCRA
         </h2>
         {resultado && (
@@ -115,7 +115,7 @@ export default function SigefConsulta() {
           type="button"
           onClick={consultar}
           disabled={loading || !cpfCnpj.trim()}
-          className="flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-emerald-700 disabled:opacity-50"
+          className="flex items-center gap-2 bg-brand-800 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-brand-900 disabled:opacity-50"
         >
           {loading ? (
             <Loader2 className="h-4 w-4 animate-spin" />
@@ -155,14 +155,14 @@ export default function SigefConsulta() {
                   onClick={() => selecionar(p)}
                   className={`w-full text-left border rounded-md p-3 text-sm transition ${
                     ativa
-                      ? "border-emerald-500 bg-emerald-50"
-                      : "border-gray-200 hover:border-emerald-300 hover:bg-gray-50"
+                      ? "border-brand-600 bg-brand-50"
+                      : "border-gray-200 hover:border-brand-300 hover:bg-gray-50"
                   }`}
                 >
                   <div className="flex items-center justify-between">
                     <span className="font-medium text-gray-900 flex items-center gap-2">
                       {p.nomeArea || "Parcela SIGEF"}
-                      {ativa && <CheckCircle2 className="h-4 w-4 text-emerald-600" />}
+                      {ativa && <CheckCircle2 className="h-4 w-4 text-brand-600" />}
                     </span>
                     <span
                       className={`text-xs px-2 py-0.5 rounded-full ${
@@ -191,7 +191,7 @@ export default function SigefConsulta() {
 
       {selecionada && (
         <>
-          <p className="mt-3 text-xs text-emerald-700">
+          <p className="mt-3 text-xs text-brand-600">
             Parcela selecionada — os dados do SIGEF serão vinculados ao processo.
           </p>
           <input type="hidden" name="sigefCodigoImovel" value={selecionada.codigoImovel} />

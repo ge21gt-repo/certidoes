@@ -116,7 +116,7 @@ export function RequisicaoDetalhe({
             <div className="mt-3 flex flex-wrap gap-2">
               <Link
                 href={`/portal/requisicoes/${requisicao.id}/editar`}
-                className="inline-flex items-center gap-1 bg-emerald-700 text-white px-4 py-2 rounded-md text-sm hover:bg-emerald-800"
+                className="inline-flex items-center gap-1 bg-brand-800 text-white px-4 py-2 rounded-md text-sm hover:bg-brand-900"
               >
                 <Pencil className="h-4 w-4" aria-hidden="true" />
                 Alterar requisição
@@ -151,7 +151,7 @@ export function RequisicaoDetalhe({
             </p>
             <Link
               href={`/portal/requisicoes/${requisicao.id}/editar`}
-              className="mt-3 inline-flex items-center gap-1 bg-emerald-700 text-white px-4 py-2 rounded-md text-sm hover:bg-emerald-800"
+              className="mt-3 inline-flex items-center gap-1 bg-brand-800 text-white px-4 py-2 rounded-md text-sm hover:bg-brand-900"
             >
               <Pencil className="h-4 w-4" aria-hidden="true" />
               Continuar solicitação
@@ -413,7 +413,7 @@ export function RequisicaoDetalhe({
                 <div className="col-span-2">
                   <Link
                     href={`/processos/${requisicao.process.id}`}
-                    className="inline-flex items-center gap-1 text-sm text-emerald-700 hover:underline"
+                    className="inline-flex items-center gap-1 text-sm text-brand-600 hover:underline"
                   >
                     <FileText className="h-4 w-4" />
                     Abrir processo

@@ -94,7 +94,7 @@ export default async function ClientesPage({
                   {podeAtender(usuario) && (
                     <Link
                       href={`/requisicoes/nova?cliente=${c.id}`}
-                      className="text-sm text-emerald-700 hover:underline"
+                      className="text-sm text-brand-600 hover:underline"
                     >
                       Nova requisição
                     </Link>

@@ -9,7 +9,7 @@ import { requireUsuario } from "@/lib/auth";
 export const dynamic = "force-dynamic";
 
 const typeIcons: Record<string, React.ReactNode> = {
-  NOVA_ENTRADA: <FileText className="h-5 w-5 text-blue-500" />,
+  NOVA_ENTRADA: <FileText className="h-5 w-5 text-brand-600" />,
   ATRIBUICAO: <UserCheck className="h-5 w-5 text-indigo-500" />,
   ANALISE_COMPLETA: <CheckCircle className="h-5 w-5 text-green-500" />,
   CONFERENCIA_COMPLETA: <CheckCircle className="h-5 w-5 text-orange-500" />,
@@ -71,7 +71,7 @@ export default async function NotificacoesPage() {
               className={`bg-white rounded-lg border p-4 flex items-start gap-4 ${
                 notif.read
                   ? "border-gray-200"
-                  : "border-blue-200 bg-blue-50/30"
+                  : "border-brand-100 bg-brand-50/50"
               }`}
             >
               <div className="mt-0.5">{icon}</div>
@@ -81,7 +81,7 @@ export default async function NotificacoesPage() {
                     {notif.title}
                   </h3>
                   {!notif.read && (
-                    <span className="w-2 h-2 rounded-full bg-blue-500" />
+                    <span className="w-2 h-2 rounded-full bg-brand-600" />
                   )}
                 </div>
                 <p className="text-sm text-gray-600 mt-0.5">{notif.message}</p>
@@ -92,7 +92,7 @@ export default async function NotificacoesPage() {
                   {notif.process && (
                     <Link
                       href={`/processos/${notif.process.id}`}
-                      className="text-xs text-blue-600 hover:underline"
+                      className="text-xs text-brand-600 hover:underline"
                     >
                       Ver processo #{notif.process.ordem}
                     </Link>

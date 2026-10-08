@@ -100,7 +100,7 @@ export default async function RequisicoesPage({
         {atendimento && (
           <Link
             href="/requisicoes/nova"
-            className="flex items-center gap-2 bg-emerald-700 text-white px-4 py-2.5 rounded-md text-sm font-medium hover:bg-emerald-800"
+            className="flex items-center gap-2 bg-brand-800 text-white px-4 py-2.5 rounded-md text-sm font-medium hover:bg-brand-900"
           >
             <PlusCircle className="h-4 w-4" />
             Nova Requisição
@@ -146,7 +146,7 @@ export default async function RequisicoesPage({
           </p>
           <Link
             href={q || status ? `/requisicoes?${new URLSearchParams({ ...(q ? { q } : {}), ...(status ? { status } : {}) })}` : "/requisicoes"}
-            className="text-xs text-emerald-700 hover:underline"
+            className="text-xs text-brand-600 hover:underline"
           >
             Limpar filtro
           </Link>

@@ -26,7 +26,7 @@ export function MarkReadButton({ notificationIds }: { notificationIds: string[] 
     <button
       onClick={handleMarkAllRead}
       disabled={loading}
-      className="flex items-center gap-2 text-sm text-blue-600 hover:text-blue-800 disabled:opacity-50"
+      className="flex items-center gap-2 text-sm text-brand-600 hover:text-brand-800 disabled:opacity-50"
     >
       {loading ? (
         <Loader2 className="h-4 w-4 animate-spin" />

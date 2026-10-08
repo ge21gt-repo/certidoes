@@ -76,8 +76,8 @@ export default async function DashboardPage() {
         <StatCard
           title="Total de Processos"
           value={data.totalProcessos}
-          icon={<FileText className="h-6 w-6 text-blue-600" />}
-          bgColor="bg-blue-50"
+          icon={<FileText className="h-6 w-6 text-brand-600" />}
+          bgColor="bg-brand-50"
         />
         <StatCard
           title="Processos Ativos"
@@ -107,7 +107,7 @@ export default async function DashboardPage() {
           </h2>
           <Link
             href="/quadro"
-            className="text-sm text-blue-600 hover:text-blue-800 flex items-center gap-1"
+            className="text-sm text-brand-600 hover:text-brand-800 flex items-center gap-1"
           >
             Ver Quadro <ArrowRight className="h-4 w-4" />
           </Link>
@@ -139,7 +139,7 @@ export default async function DashboardPage() {
           </h2>
           <Link
             href="/processos"
-            className="text-sm text-blue-600 hover:text-blue-800 flex items-center gap-1"
+            className="text-sm text-brand-600 hover:text-brand-800 flex items-center gap-1"
           >
             Ver Todos <ArrowRight className="h-4 w-4" />
           </Link>
@@ -174,7 +174,7 @@ export default async function DashboardPage() {
                     <td className="px-6 py-3 text-sm font-medium text-gray-900">
                       <Link
                         href={`/processos/${proc.id}`}
-                        className="text-blue-600 hover:underline"
+                        className="text-brand-600 hover:underline"
                       >
                         #{proc.ordem}
                       </Link>
@@ -211,7 +211,7 @@ export default async function DashboardPage() {
                     <br />
                     <Link
                       href="/processos/novo"
-                      className="text-blue-600 hover:underline mt-1 inline-block"
+                      className="text-brand-600 hover:underline mt-1 inline-block"
                     >
                       Criar primeiro processo
                     </Link>

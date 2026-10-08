@@ -71,7 +71,7 @@ export function NivelComplexidade({
         Nível de complexidade
       </h2>
       {sugestao ? (
-        <p className="mb-3 rounded-md border border-blue-200 bg-blue-50 px-3 py-2 text-xs text-blue-900">
+        <p className="mb-3 rounded-md border border-brand-100 bg-brand-50 px-3 py-2 text-xs text-brand-900">
           Sugerido pelo corte de {sugestao.quando}: <strong className="font-semibold">{sugestao.nivel}</strong>.
         </p>
       ) : (
@@ -106,7 +106,7 @@ export function NivelComplexidade({
           <button
             type="submit"
             disabled={loading}
-            className="inline-flex items-center gap-2 rounded-md bg-emerald-700 px-4 py-2 text-sm text-white hover:bg-emerald-800 disabled:opacity-50"
+            className="inline-flex items-center gap-2 rounded-md bg-brand-800 px-4 py-2 text-sm text-white hover:bg-brand-900 disabled:opacity-50"
           >
             {loading && <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />}
             Confirmar nível

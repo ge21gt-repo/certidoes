@@ -90,7 +90,7 @@ export function UsuariosAdmin({
             setEditando(null);
             setCriando(true);
           }}
-          className="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700"
+          className="inline-flex items-center gap-2 bg-brand-800 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-brand-800"
         >
           <Plus className="h-4 w-4" />
           Novo usuário
@@ -115,7 +115,7 @@ export function UsuariosAdmin({
               <tr key={user.id} className="hover:bg-gray-50 align-top">
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-sm font-medium">
+                    <div className="w-8 h-8 rounded-full bg-brand-600 flex items-center justify-center text-white text-sm font-medium">
                       {user.name.charAt(0)}
                     </div>
                     <span className="text-sm font-medium text-gray-900">{user.name}</span>
@@ -144,7 +144,7 @@ export function UsuariosAdmin({
                 <td className="px-6 py-4 text-sm text-center text-gray-600">{user.processos}</td>
                 <td className="px-6 py-4 text-center">
                   <span
-                    className={`inline-flex px-2 py-0.5 rounded-full text-xs font-medium ${user.active ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-500"}`}
+                    className={`inline-flex px-2 py-0.5 rounded-full text-xs font-medium ${user.active ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-500"}`}
                   >
                     {user.active ? "Ativo" : "Inativo"}
                   </span>
@@ -157,7 +157,7 @@ export function UsuariosAdmin({
                       setCriando(false);
                       setEditando(editando === user.id ? null : user.id);
                     }}
-                    className="inline-flex items-center gap-1 text-sm text-blue-700 hover:underline"
+                    className="inline-flex items-center gap-1 text-sm text-brand-600 hover:underline"
                   >
                     <Pencil className="h-3.5 w-3.5" />
                     Editar
@@ -289,7 +289,7 @@ function FormularioUsuario({
               : { name, role, department, senha }
           )
         }
-        className="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 disabled:opacity-50"
+        className="inline-flex items-center gap-2 bg-brand-800 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-brand-800 disabled:opacity-50"
       >
         {salvando && <Loader2 className="h-4 w-4 animate-spin" />}
         Salvar

@@ -114,7 +114,7 @@ export default async function ProcessoDetailPage({ params, searchParams }: PageP
             {/certid/i.test(processo.tipoServico) && (
               <Link
                 href={`/processos/${processo.id}/certidao`}
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium bg-blue-600 text-white hover:bg-blue-700"
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium bg-brand-800 text-white hover:bg-brand-800"
               >
                 <FileCheck className="h-4 w-4" />
                 {processo.dtAssDiretor ? "Ver Certidao" : "Minuta da Certidao"}
@@ -215,9 +215,9 @@ export default async function ProcessoDetailPage({ params, searchParams }: PageP
 
           {/* SIGEF/INCRA */}
           {processo.sigefCodigoImovel && (
-            <div className="bg-white rounded-lg shadow-sm border border-emerald-200 p-6">
+            <div className="bg-white rounded-lg shadow-sm border border-brand-100 p-6">
               <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <MapPin className="h-5 w-5 text-emerald-600" />
+                <MapPin className="h-5 w-5 text-brand-600" />
                 Dados da Propriedade - SIGEF/INCRA
                 <span
                   className={`text-xs font-medium px-2 py-1 rounded-full ${

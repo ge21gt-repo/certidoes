@@ -14,7 +14,7 @@ export function LogoutButton() {
   return (
     <button
       onClick={sair}
-      className="text-emerald-100 hover:text-white text-sm underline underline-offset-2"
+      className="rounded-md bg-brand-800 px-4 py-1 text-sm font-semibold text-white hover:bg-brand-900"
     >
       Sair
     </button>

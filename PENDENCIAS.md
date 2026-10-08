@@ -67,7 +67,7 @@ O **status** e a **prioridade** vivem só aqui; responsável e tipo aparecem tam
 | #PEND-44 | Validar no servidor o CPF/CNPJ do representado e a coerência com a Pergunta 1 | backend | segurança | média | resolvida (2026-10-07) |
 | #PEND-45 | Associar cada polígono nomeado ao polígono do mapa (UI) | frontend | adição | média | resolvida (2026-10-07) |
 | #PEND-46 | Consulta SIGEF simulada com CAR devolve parcelas com área 0 e município vazio | backend | bugfix | baixa | descartada (obsoleta: CAR removido em `f34b945`) |
-| #PEND-47 | Layout raiz: `main` sem `min-w-0` deixa conteúdo largo esticar a página no celular | frontend | melhoria | baixa | aberta |
+| #PEND-47 | Layout raiz: `main` sem `min-w-0` deixa conteúdo largo esticar a página no celular | frontend | melhoria | baixa | resolvida (2026-10-08) |
 | #PEND-48 | `PATCH /api/processes/[id]` não valida tipos nem data vazia (devolve 500) | backend | bugfix | média | aberta |
 | #PEND-49 | `Process.total` nunca é calculado (a tela mostra R$ 0,00 mesmo com taxas) | backend | bugfix | média | aberta |
 | #PEND-50 | Decisão: acesso à API b-Cadastro (Portal Integrador): processo SEI de acordo bilateral e credencial | negócio | decisão | média | aberta |
@@ -76,6 +76,7 @@ O **status** e a **prioridade** vivem só aqui; responsável e tipo aparecem tam
 | #PEND-53 | Decisão: confirmar com o cliente as regras de duplicidade que o documento não detalha | negócio | decisão | média | aberta |
 | #PEND-54 | Decisão: aceitar o arquivamento não cancela o processo aberto | negócio | decisão | média | aberta |
 | #PEND-55 | Decisão: quem marca a divisa como finalizada e confirmar as hipóteses do nível de complexidade | negócio | decisão | média | aberta |
+| #PEND-56 | Logo do IGC em alta resolução (SVG ou PNG) e versão para fundo escuro | negócio | adição | média | aberta |
 
 ## Detalhes
 
@@ -482,6 +483,8 @@ Em desenvolvimento a mesma consulta devolve ora parcelas com dados completos (11
 
 O `main` é item de um contêiner flex e tem `min-width: auto`: qualquer descendente com largura mínima maior que a tela (texto sem espaço, `input` com largura intrínseca) alarga o `main` e a página ganha rolagem horizontal. Apareceu em 375 px na lista de Minhas Requisições (nome de área com código do CAR sem espaços) e no campo "Propriedade de" ao lado do rótulo "Espólio de". Foi corrigido caso a caso (`min-w-0` e `[overflow-wrap:anywhere]` nos itens da lista e nos botões de imóvel; `w-full min-w-0` no campo). A correção na raiz (`min-w-0` no `main`) não foi aplicada porque muda o comportamento de todo o backoffice (tabelas largas passariam a vazar do `main` em vez de esticá-lo); precisa de uma passada nas telas do backoffice antes.
 
+**Resolução:** Fase 2 da identidade visual (2026-10-08): `min-w-0` no `main` de `src/app/layout.tsx`. Conferido o receio da entrada: em 1280 e 1024 px nenhuma tela do backoffice vaza do `main` (as tabelas e o quadro já rolavam dentro do próprio contêiner, `overflow-x-auto`), e o portal não tem rolagem horizontal em 375 px, nem com os chips da lista de requisições.
+
 ### #PEND-48 · `PATCH /api/processes/[id]` não valida tipos nem data vazia (devolve 500)
 
 **Responsável:** backend · **Tipo:** bugfix · **Registrada em:** 2026-10-07
@@ -551,3 +554,12 @@ Quando a DDD aceita o pedido de arquivamento de uma requisição que já tem pro
 O nível de complexidade (#PEND-32) depende de a linha de divisa estar "finalizada", dado que não existia e hoje ninguém preenche: toda linha nasce **não finalizada**, o que dá o nível mais alto (cautela). Só há uma API para o Administrador marcar (`PATCH /api/geometria/linhas/[id]`) e nenhuma tela. Falta decidir quem marca, onde (tela, importação das divisas validadas) e com que critério. Hipóteses do time, aprovadas em 2026-10-07 e pendentes de confirmação do cliente: (a) imóvel no corredor de 1 km sem cortar a divisa conta como "longe" (nível 1 ou 2); (b) rio continua no nível 9, por cautela; (c) tríplice finalizada cai em 3 ou 4 ("na divisa com divisa finalizada"); (d) cortando mais de uma linha vale a mais difícil, e três municípios entre as linhas cortadas valem como tríplice; (e) o número par vale quando o imóvel tem mais de um polígono, e o 9 não tem par; (f) o "Documento em expedição – CJT" do documento corresponde à assinatura do técnico (subetapa "Expedição"), e as assinaturas do gerente e do diretor ficam em "Documento em assinatura".
 **Impacto no frontend:** uma tela para marcar a divisa como finalizada, quando houver decisão.
 **Depende de:** resposta do cliente.
+
+### #PEND-56 · Logo do IGC em alta resolução (SVG ou PNG) e versão para fundo escuro
+
+**Responsável:** negócio · **Tipo:** adição · **Registrada em:** 2026-10-08
+**Onde:** `public/marca/igc-logo.png`, `src/components/marca/logo-igc.tsx`, `src/app/favicon.ico`
+
+A logo em uso é provisória: PNG de 176×141 px do histórico do repositório (commit 4235d72; o site do IGC publica o mesmo desenho em JPG de 125×121 px), com fundo branco e sem versão para fundo escuro. Serve no cabeçalho do portal, na barra lateral e nos logins (até ~64 px de altura, sobre fundo claro); maior que isso fica serrilhada. Falta o arquivo definitivo: SVG, ou PNG de pelo menos 600 px de largura com fundo transparente, e uma versão em branco se um dia houver fundo escuro. Trocar é substituir o arquivo (o componente `LogoIgc` e o favicon, gerado a partir da logo, seguem a mesma imagem).
+**Depende de:** o IGC fornecer o arquivo.
+**Relacionada:** #PEND-38 (identidade visual).

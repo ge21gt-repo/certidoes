@@ -58,7 +58,7 @@ O **status** e a **prioridade** vivem só aqui; responsável e tipo aparecem tam
 | #PEND-35 | Matrícula "Usucapião" na validação e na persistência | backend | adição | média | resolvida (2026-10-07) |
 | #PEND-36 | Nomenclatura de polígonos e S/M–S/E validadas no servidor | backend | adição | média | resolvida (2026-10-07) |
 | #PEND-37 | Decisão: o que é "incluir e-mail para finalizar o cadastro (ou SMS)" | negócio | decisão | média | aberta |
-| #PEND-38 | Decisão: cartela de cores e logos do IGC | negócio | decisão | média | aberta |
+| #PEND-38 | Decisão: cartela de cores e logos do IGC | negócio | decisão | média | em andamento |
 | #PEND-39 | Decisão: dúvidas do documento de correções de 2026-09-16 | negócio | decisão | média | aberta |
 | #PEND-40 | Texto auxiliar em `gray-400` abaixo do contraste AA (rodapé do portal) | frontend | melhoria | baixa | resolvida (2026-10-07) |
 | #PEND-41 | Máscaras de entrada nos formulários (telefone, CPF, CNPJ etc.) | frontend | adição | média | resolvida (2026-10-07) |
@@ -395,6 +395,7 @@ A tela "Finalize seu cadastro", reproduzida no próprio documento, já pede e-ma
 
 O documento pede "mudar todas as cores, seguindo a cartela e padrão do IGC". A cartela não está no repositório. Preciso dos valores (hex) e do padrão (tipografia, logo no cabeçalho, se o selo "gov.br" fica). Há logos antigos no histórico do git (`public/images/logo-igc.jpg` e `logo-gov-sp.png` no commit f4594a8; `logoIGC.png` no 4235d72) — confirmar se ainda valem.
 **Bloqueia:** a troca de cores do portal.
+**Andamento (2026-10-08):** o time decidiu seguir a **paleta do portal IDE-SP** (https://www.idesp.sp.gov.br/) com a **logo do IGC** (nunca a do Governo do Estado de SP), em 6 fases na branch `feat/portal-correcoes-cjt`. Fase 1 feita: tokens `brand`, `gray` (neutros do IDE-SP), `areia`, `marca` e a escala de erro em `src/app/globals.css`, fonte Inter, foco por teclado visível e `src/lib/paleta.test.ts` (confere o contraste AA de cada par texto e fundo). A logo usada é a do histórico do repositório (`logoIGC.png`, 176×141 px, commit 4235d72; a do site do IGC é o mesmo desenho em 125×121 px): **provisória**, falta o arquivo em SVG ou PNG de alta resolução. A paleta é a do IDE-SP, não a do IGC (preto, branco e vermelho `#FF161F`): confirmar com o cliente.
 
 ### #PEND-39 · Decisão: dúvidas do documento de correções de 2026-09-16
 

@@ -77,7 +77,7 @@ export function IntroducaoCjt({ children }: { children: React.ReactNode }) {
             // Espera o formulário entrar no DOM para levar o foco até ele.
             requestAnimationFrame(() => formularioRef.current?.focus());
           }}
-          className="rounded-md bg-emerald-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-emerald-800"
+          className="rounded-md bg-brand-800 px-5 py-2.5 text-sm font-medium text-white hover:bg-brand-900"
         >
           Iniciar solicitação
         </button>
@@ -91,7 +91,7 @@ export function IntroducaoCjt({ children }: { children: React.ReactNode }) {
         <details className="group rounded-lg border border-gray-200 bg-white">
           <summary className="flex cursor-pointer items-center justify-between gap-3 px-4 py-3 text-sm font-medium text-gray-800">
             Sobre a CJT e avisos
-            <span className="text-xs font-normal text-emerald-700">
+            <span className="text-xs font-normal text-brand-600">
               <span className="group-open:hidden">Ver</span>
               <span className="hidden group-open:inline">Ocultar</span>
             </span>

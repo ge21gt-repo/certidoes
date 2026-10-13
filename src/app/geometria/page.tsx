@@ -23,7 +23,7 @@ const IMOVEL_EXEMPLO = {
 
 const ROTULO_EXEMPLO = "Imovel de exemplo — Brotas / Torrinha / Sao Pedro (SP) · 11.436 ha";
 
-const CORES = ["#10b981", "#f59e0b", "#3b82f6", "#ef4444", "#8b5cf6"];
+const CORES = ["#2d6986", "#f59e0b", "#16a34a", "#ef4444", "#8b5cf6"];
 
 /** Zoom minimo para pedir as parcelas da janela (abaixo disso a janela e grande demais). */
 const ZOOM_MIN_SIGEF = 12;
@@ -292,6 +292,8 @@ export default function GeometriaPage() {
     carregarCss("geoman-css", CDN.geomanCss);
     carregarScript(CDN.leafletJs).then(async () => {
       await carregarScript(CDN.geomanJs).catch(() => undefined);
+      // O Strict Mode do React (desenvolvimento) roda este efeito duas vezes: o segundo não recria o mapa.
+      if (mapRef.current) return;
       const L = (window as any).L;
       const map = L.map("mapa-divisas").setView([-22.2, -48.6], 6);
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -738,7 +740,7 @@ export default function GeometriaPage() {
   return (
     <div className="p-6 max-w-6xl mx-auto space-y-4">
       <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-        <MapIcon className="h-6 w-6 text-emerald-700" />
+        <MapIcon className="h-6 w-6 text-brand-600" />
         Pré-análise de Divisas — Geometria do Imóvel
       </h1>
 
@@ -754,7 +756,7 @@ export default function GeometriaPage() {
         <div
           role="status"
           className={`rounded-md border p-3 text-sm ${
-            avisoParcela ? "border-amber-200 bg-amber-50 text-amber-900" : "border-blue-200 bg-blue-50 text-blue-900"
+            avisoParcela ? "border-amber-200 bg-amber-50 text-amber-900" : "border-brand-100 bg-brand-50 text-brand-900"
           }`}
         >
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
@@ -890,7 +892,7 @@ export default function GeometriaPage() {
                 onClick={() => arquivoRef.current?.click()}
                 disabled={!pronto || carregandoArquivo}
                 title="Abrir a camada enviada pelo proprietario (GeoJSON, KML ou shapefile .zip) quando nao for usar a parcela do SIGEF"
-                className="flex items-center gap-1.5 text-xs bg-orange-600 text-white px-3 py-1.5 rounded-md font-medium hover:bg-orange-700 disabled:opacity-50"
+                className="flex items-center gap-1.5 text-xs bg-orange-700 text-white px-3 py-1.5 rounded-md font-medium hover:bg-orange-800 disabled:opacity-50"
               >
                 {carregandoArquivo ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Upload className="h-3.5 w-3.5" />}
                 Abrir camada do proprietario
@@ -901,7 +903,7 @@ export default function GeometriaPage() {
                     type="button"
                     onClick={usarCamadaProprietario}
                     disabled={!camadaProprietario.poligonos}
-                    className="text-xs bg-indigo-600 text-white px-3 py-1.5 rounded-md font-medium hover:bg-indigo-700 disabled:opacity-50"
+                    className="text-xs bg-brand-800 text-white px-3 py-1.5 rounded-md font-medium hover:bg-brand-900 disabled:opacity-50"
                   >
                     Usar como poligono de analise
                   </button>
@@ -942,7 +944,7 @@ export default function GeometriaPage() {
                     type="button"
                     onClick={usarRascunho}
                     disabled={!rascunhoTotal}
-                    className="text-xs bg-indigo-600 text-white px-3 py-1.5 rounded-md font-medium hover:bg-indigo-700 disabled:opacity-50"
+                    className="text-xs bg-brand-800 text-white px-3 py-1.5 rounded-md font-medium hover:bg-brand-900 disabled:opacity-50"
                   >
                     Usar rascunho como poligono de analise
                   </button>
@@ -986,14 +988,14 @@ export default function GeometriaPage() {
                 type="button"
                 onClick={carregarParcela}
                 disabled={carregandoParcela || !pronto || !codigoParcela.trim()}
-                className="flex items-center gap-1.5 text-xs bg-indigo-600 text-white px-3 py-1.5 rounded-md font-medium hover:bg-indigo-700 disabled:opacity-50 whitespace-nowrap"
+                className="flex items-center gap-1.5 text-xs bg-brand-800 text-white px-3 py-1.5 rounded-md font-medium hover:bg-brand-900 disabled:opacity-50 whitespace-nowrap"
               >
                 {carregandoParcela ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Search className="h-3.5 w-3.5" />}
                 Buscar pelo codigo
               </button>
             </div>
           </div>
-          <p className="text-xs text-indigo-700 bg-indigo-50 border border-indigo-200 rounded p-2">
+          <p className="text-xs text-brand-800 bg-brand-50 border border-brand-100 rounded p-2">
             Poligono em analise: {parcelaInfo ?? ROTULO_EXEMPLO}
           </p>
           {vinculo.estado === "ok" ? (
@@ -1017,7 +1019,7 @@ export default function GeometriaPage() {
           <button
             onClick={calcular}
             disabled={loading || !pronto}
-            className="w-full flex items-center justify-center gap-2 bg-emerald-700 text-white py-2.5 rounded-md text-sm font-medium hover:bg-emerald-800 disabled:opacity-50"
+            className="w-full flex items-center justify-center gap-2 bg-brand-800 text-white py-2.5 rounded-md text-sm font-medium hover:bg-brand-900 disabled:opacity-50"
           >
             {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Scissors className="h-4 w-4" />}
             Calcular pré-análise
@@ -1033,7 +1035,7 @@ export default function GeometriaPage() {
                 Caso: {resultado.classificacao}
               </span>
               {resultado.nivelSugerido != null && (
-                <span className="ml-2 text-xs font-bold px-2 py-1 rounded-full bg-blue-100 text-blue-800">
+                <span className="ml-2 text-xs font-bold px-2 py-1 rounded-full bg-brand-100 text-brand-800">
                   Nível sugerido: {resultado.nivelSugerido}
                 </span>
               )}
@@ -1046,7 +1048,7 @@ export default function GeometriaPage() {
                 <p className="mt-2 text-sm text-gray-800">
                   Pré-análise gravada no processo{" "}
                   {vinculo.estado === "ok" && vinculo.id === processoGravado ? `#${vinculo.ordem}` : "informado"}.{" "}
-                  <Link href={`/processos/${processoGravado}/certidao`} className="text-blue-700 underline">
+                  <Link href={`/processos/${processoGravado}/certidao`} className="text-brand-600 underline">
                     Ver minuta da certidão
                   </Link>
                 </p>
@@ -1069,7 +1071,7 @@ export default function GeometriaPage() {
                     <span className="text-xs font-medium text-gray-800 w-28 truncate">{mun}</span>
                     <div className="flex-1 bg-gray-100 rounded-full h-3">
                       <div
-                        className="bg-emerald-600 h-3 rounded-full"
+                        className="bg-brand-600 h-3 rounded-full"
                         style={{ width: `${Math.min(pct, 100)}%` }}
                       />
                     </div>

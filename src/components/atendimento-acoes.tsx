@@ -80,7 +80,7 @@ export function LiberarRequisicao({ requisicaoId }: { requisicaoId: string }) {
       <button
         type="submit"
         disabled={loading}
-        className="inline-flex items-center gap-2 rounded-md bg-blue-700 px-4 py-2 text-sm text-white hover:bg-blue-800 disabled:opacity-50"
+        className="inline-flex items-center gap-2 rounded-md bg-brand-800 px-4 py-2 text-sm text-white hover:bg-brand-900 disabled:opacity-50"
       >
         {loading && <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />}
         Liberar preenchimento
@@ -274,7 +274,7 @@ export function DecidirArquivamento({
           <button
             type="button"
             onClick={() => setModo("aceitar")}
-            className="rounded-md bg-emerald-700 px-4 py-2 text-sm text-white hover:bg-emerald-800"
+            className="rounded-md bg-brand-800 px-4 py-2 text-sm text-white hover:bg-brand-900"
           >
             Aceitar arquivamento
           </button>
@@ -325,7 +325,7 @@ export function DecidirArquivamento({
               type="submit"
               disabled={loading}
               className={`inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm text-white disabled:opacity-50 ${
-                modo === "recusar" ? "bg-red-700 hover:bg-red-800" : "bg-emerald-700 hover:bg-emerald-800"
+                modo === "recusar" ? "bg-red-700 hover:bg-red-800" : "bg-brand-800 hover:bg-brand-900"
               }`}
             >
               {loading && <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />}
@@ -448,7 +448,7 @@ export function DesarquivarRequisicao({
             <button
               type="submit"
               disabled={loading}
-              className="inline-flex items-center gap-2 rounded-md bg-emerald-700 px-4 py-2 text-sm text-white hover:bg-emerald-800 disabled:opacity-50"
+              className="inline-flex items-center gap-2 rounded-md bg-brand-800 px-4 py-2 text-sm text-white hover:bg-brand-900 disabled:opacity-50"
             >
               {loading && <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />}
               Confirmar desarquivamento
@@ -512,7 +512,7 @@ export function ConferirDocumentos({ requisicaoId }: { requisicaoId: string }) {
         type="button"
         onClick={conferir}
         disabled={loading}
-        className="mt-3 inline-flex items-center gap-2 rounded-md bg-emerald-700 px-4 py-2 text-sm text-white hover:bg-emerald-800 disabled:opacity-50"
+        className="mt-3 inline-flex items-center gap-2 rounded-md bg-brand-800 px-4 py-2 text-sm text-white hover:bg-brand-900 disabled:opacity-50"
       >
         {loading && <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />}
         Marcar documentos como conferidos
@@ -588,7 +588,7 @@ export function AberturaProcesso({ requisicaoId }: { requisicaoId: string }) {
       <button
         type="submit"
         disabled={loading}
-        className="bg-emerald-700 text-white px-4 py-2 rounded-md text-sm hover:bg-emerald-800 disabled:opacity-50 flex items-center gap-2"
+        className="bg-brand-800 text-white px-4 py-2 rounded-md text-sm hover:bg-brand-900 disabled:opacity-50 flex items-center gap-2"
       >
         {loading && <Loader2 className="h-4 w-4 animate-spin" />}
         Abrir processo na entrada do SDTC
@@ -702,7 +702,7 @@ export function FinalizacaoPagamento({
           type="button"
           onClick={() => enviar(true)}
           disabled={loading || pagamentoStatus === "PENDENTE"}
-          className="bg-emerald-700 text-white px-4 py-2 rounded-md text-sm hover:bg-emerald-800 disabled:opacity-50"
+          className="bg-brand-800 text-white px-4 py-2 rounded-md text-sm hover:bg-brand-900 disabled:opacity-50"
         >
           Finalizar requisição
         </button>

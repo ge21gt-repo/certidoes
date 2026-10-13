@@ -78,7 +78,7 @@ export default async function PortalHomePage({
         </div>
         <Link
           href="/portal/nova-solicitacao"
-          className="flex items-center gap-2 bg-emerald-700 text-white px-4 py-2.5 rounded-md text-sm font-medium hover:bg-emerald-800"
+          className="flex items-center gap-2 bg-brand-800 text-white px-4 py-2.5 rounded-md text-sm font-medium hover:bg-brand-900"
         >
           <PlusCircle className="h-4 w-4" />
           Nova Requisição
@@ -95,7 +95,7 @@ export default async function PortalHomePage({
             Minhas Requisições{grupo && ` · ${grupo.rotulo}`}
           </h2>
           {grupo && (
-            <Link href={hrefSemGrupo} className="text-xs text-emerald-700 hover:underline">
+            <Link href={hrefSemGrupo} className="text-xs text-brand-600 hover:underline">
               Limpar filtro
             </Link>
           )}
@@ -152,7 +152,7 @@ export default async function PortalHomePage({
                         {st.label}
                       </span>
                       {s.status === "RASCUNHO" && (
-                        <span className="rounded-md bg-emerald-700 px-3 py-1.5 text-xs font-medium text-white">
+                        <span className="rounded-md bg-brand-800 px-3 py-1.5 text-xs font-medium text-white">
                           Continuar
                         </span>
                       )}

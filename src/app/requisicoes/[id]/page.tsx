@@ -96,7 +96,7 @@ export default async function VisualizarRequisicaoPage({
       {atendimento && podeDesarquivar(requisicao) && (
         <div role="status" className="rounded-lg border border-gray-300 bg-gray-50 p-4 text-sm text-gray-800">
           <strong className="font-semibold">Requisição arquivada.</strong> Para devolvê-la ao andamento,{" "}
-          <a href="#desarquivar" className="font-semibold text-emerald-700 underline">
+          <a href="#desarquivar" className="font-semibold text-brand-600 underline">
             desarquive-a
           </a>{" "}
           (o painel fica no fim da página).

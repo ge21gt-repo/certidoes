@@ -9,7 +9,7 @@ export default async function CompletarCadastroPage() {
     <div className="max-w-md mx-auto">
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
         <div className="text-center mb-6">
-          <MailCheck className="h-10 w-10 text-emerald-700 mx-auto mb-2" />
+          <MailCheck className="h-10 w-10 text-brand-600 mx-auto mb-2" />
           <h1 className="text-xl font-bold text-gray-900">Finalize seu cadastro</h1>
           <p className="text-sm text-gray-500 mt-1">
             Precisamos apenas dos seus dados de contato para comunicação sobre

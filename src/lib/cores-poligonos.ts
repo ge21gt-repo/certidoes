@@ -1,8 +1,8 @@
 /** Cor de cada polígono nomeado, usada na lista, no mapa e na legenda (a cor nunca é a única pista). */
 export const CORES_POLIGONOS = [
-  "#10b981",
+  "#2d6986",
   "#f59e0b",
-  "#3b82f6",
+  "#16a34a",
   "#ef4444",
   "#8b5cf6",
   "#0891b2",

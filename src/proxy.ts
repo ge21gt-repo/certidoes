@@ -23,6 +23,8 @@ const PUBLICO = [
   "/api/seed",
   // gancho do agendador externo; a propria rota exige o token (CRON_TOKEN)
   "/api/cron",
+  // logo do IGC (public/marca): aparece nas telas de login, antes de haver sessao
+  "/marca",
 ];
 
 export function proxy(request: NextRequest) {

@@ -292,7 +292,7 @@ export default function NovoProcessoPage() {
           <button
             type="submit"
             disabled={loading}
-            className="flex items-center gap-2 bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium disabled:opacity-50"
+            className="flex items-center gap-2 bg-brand-800 text-white px-6 py-2.5 rounded-lg hover:bg-brand-800 transition-colors text-sm font-medium disabled:opacity-50"
           >
             {loading ? (
               <Loader2 className="h-4 w-4 animate-spin" />

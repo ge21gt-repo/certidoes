@@ -89,7 +89,7 @@ export default async function QuadroPage() {
                     )}
                     {proc.tecnicoResp && (
                       <div className="mt-2 flex items-center gap-1">
-                        <div className="w-4 h-4 rounded-full bg-blue-200 flex items-center justify-center text-[10px] text-blue-700 font-medium">
+                        <div className="w-4 h-4 rounded-full bg-brand-200 flex items-center justify-center text-[10px] text-brand-800 font-medium">
                           {proc.tecnicoResp.name.charAt(0)}
                         </div>
                         <span className="text-xs text-gray-500">

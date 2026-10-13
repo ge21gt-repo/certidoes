@@ -15,10 +15,10 @@ import { GRUPOS_ATENDIMENTO, type ChaveGrupoAtendimento } from "@/lib/requisicao
 
 const VISUAL: Record<ChaveGrupoAtendimento, { Icone: LucideIcon; cor: string }> = {
   "analise-duplicidade": { Icone: Timer, cor: "text-amber-500" },
-  fila: { Icone: ListChecks, cor: "text-blue-600" },
+  fila: { Icone: ListChecks, cor: "text-brand-600" },
   "aguardando-cliente": { Icone: MessageCircleQuestion, cor: "text-violet-600" },
   congeladas: { Icone: Snowflake, cor: "text-orange-500" },
-  "em-analise": { Icone: Cog, cor: "text-blue-600" },
+  "em-analise": { Icone: Cog, cor: "text-brand-600" },
   devolvidas: { Icone: RotateCcw, cor: "text-red-500" },
   "arquivamento-solicitado": { Icone: ArchiveRestore, cor: "text-amber-600" },
   arquivadas: { Icone: Archive, cor: "text-gray-500" },
@@ -66,7 +66,7 @@ export function CartoesSituacaoAtendimento({
               aria-current={selecionado ? "true" : undefined}
               className={`flex h-full items-center gap-3 rounded-lg border p-4 ${
                 selecionado
-                  ? "border-emerald-600 bg-emerald-50 ring-2 ring-emerald-600"
+                  ? "border-brand-600 bg-brand-50 ring-2 ring-brand-600"
                   : "border-gray-200 bg-white hover:border-gray-400"
               }`}
             >

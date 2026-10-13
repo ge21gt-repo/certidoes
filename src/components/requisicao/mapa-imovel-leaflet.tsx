@@ -23,7 +23,7 @@ export default function MapaImovelLeaflet({
       maxZoom: 18,
     }).addTo(mapa);
     const contorno = L.geoJSON(geometria as GeoJSON.GeoJsonObject, {
-      style: { color: "#047857", weight: 2.5, fillColor: "#047857", fillOpacity: 0.22 },
+      style: { color: "#2d6986", weight: 2.5, fillColor: "#2d6986", fillOpacity: 0.22 },
     }).addTo(mapa);
     mapa.fitBounds(contorno.getBounds(), { padding: [24, 24], maxZoom: 17 });
     return () => {

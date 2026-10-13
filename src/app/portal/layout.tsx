@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getSolicitanteLogado } from "@/lib/portal-auth";
 import { LogoutButton } from "@/components/portal-logout";
+import { LogoIgc } from "@/components/marca/logo-igc";
 
 export const metadata = {
   title: "Portal do Solicitante — Certidões",
@@ -14,45 +15,49 @@ export default async function PortalLayout({
   const solicitante = await getSolicitanteLogado();
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-emerald-800 text-white shadow">
-        <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
-          <Link href="/portal" className="flex items-center gap-2 font-semibold">
-            <span className="bg-white text-emerald-800 rounded px-2 py-0.5 text-xs font-bold">
-              gov.br
+    <div className="min-h-screen flex flex-col bg-gray-50">
+      <header className="bg-white border-b border-gray-200">
+        <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+          <Link href="/portal" className="flex items-center gap-3 min-w-0">
+            <LogoIgc altura={52} prioridade />
+            <span className="min-w-0 leading-tight">
+              <span className="block font-bold text-gray-900">Portal de Certidões</span>
+              <span className="block text-xs text-gray-500">Certidão de Jurisdição Territorial</span>
             </span>
-            Portal de Certidões
           </Link>
           {solicitante && (
-            <div className="flex items-center gap-4 text-sm">
-              <span className="hidden sm:inline opacity-90">
-                {solicitante.nome}
-              </span>
-              <LogoutButton />
-            </div>
+            <span className="hidden sm:inline text-sm text-gray-700 [overflow-wrap:anywhere]">
+              {solicitante.nome}
+            </span>
           )}
         </div>
       </header>
       {solicitante && (
-        <nav
-          aria-label="Áreas do portal"
-          className="bg-emerald-700 text-white/90 text-sm"
-        >
-          <div className="max-w-5xl mx-auto px-4 flex gap-5 py-2">
-            <Link href="/portal" className="hover:text-white">
+        <nav aria-label="Áreas do portal" className="bg-areia-100 text-sm">
+          <div className="max-w-5xl mx-auto px-4 py-2 flex flex-wrap items-center gap-x-5 gap-y-1">
+            <Link href="/portal" className="font-medium text-gray-700 hover:text-brand-800 hover:underline underline-offset-4">
               Minhas Requisições
             </Link>
-            <Link href="/portal/nova-solicitacao" className="hover:text-white">
+            <Link
+              href="/portal/nova-solicitacao"
+              className="font-medium text-gray-700 hover:text-brand-800 hover:underline underline-offset-4"
+            >
               Nova Requisição
             </Link>
-            <Link href="/portal/cadastro" className="hover:text-white">
+            <Link
+              href="/portal/cadastro"
+              className="font-medium text-gray-700 hover:text-brand-800 hover:underline underline-offset-4"
+            >
               Cadastro
             </Link>
+            <span className="ml-auto">
+              <LogoutButton />
+            </span>
           </div>
         </nav>
       )}
-      <main className="max-w-5xl mx-auto px-4 py-8">{children}</main>
-      <footer className="text-center text-xs text-gray-500 pb-8">
+      <main className="flex-1 w-full max-w-5xl mx-auto px-4 py-8">{children}</main>
+      <footer className="bg-gray-100 border-t border-gray-200 py-4 text-center text-xs text-gray-600">
         Serviço de emissão de certidões — identidade validada pela plataforma gov.br
       </footer>
     </div>

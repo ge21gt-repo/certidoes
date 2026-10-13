@@ -41,7 +41,7 @@ export default function PortalLoginPage() {
     <div className="max-w-md mx-auto">
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
         <div className="text-center mb-6">
-          <ShieldCheck className="h-10 w-10 text-emerald-700 mx-auto mb-2" />
+          <ShieldCheck className="h-10 w-10 text-brand-600 mx-auto mb-2" />
           <h1 className="text-xl font-bold text-gray-900">
             Acesse com sua conta gov.br
           </h1>
@@ -93,7 +93,7 @@ export default function PortalLoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-emerald-700 text-white py-2.5 rounded-md text-sm font-medium hover:bg-emerald-800 disabled:opacity-50 flex items-center justify-center gap-2"
+            className="w-full bg-brand-800 text-white py-2.5 rounded-md text-sm font-medium hover:bg-brand-900 disabled:opacity-50 flex items-center justify-center gap-2"
           >
             {loading && <Loader2 className="h-4 w-4 animate-spin" />}
             Entrar com gov.br

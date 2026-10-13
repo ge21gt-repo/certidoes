@@ -88,7 +88,7 @@ export default async function EditarRequisicaoPage({
         <p className="mb-6 -mt-3 text-sm">
           <Link
             href={`/portal/requisicoes/${requisicao.id}#conversa`}
-            className="text-emerald-800 underline"
+            className="text-brand-600 underline"
           >
             Ver conversa com a DDD
           </Link>

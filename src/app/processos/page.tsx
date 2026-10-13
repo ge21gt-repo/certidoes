@@ -70,7 +70,7 @@ export default async function ProcessosPage({ searchParams }: PageProps) {
         </div>
         <Link
           href="/processos/novo"
-          className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+          className="flex items-center gap-2 bg-brand-800 text-white px-4 py-2 rounded-lg hover:bg-brand-800 transition-colors text-sm font-medium"
         >
           <PlusCircle className="h-4 w-4" />
           Novo Processo
@@ -87,7 +87,7 @@ export default async function ProcessosPage({ searchParams }: PageProps) {
               name="search"
               defaultValue={search}
               placeholder="Buscar por interessado, expediente ou municipio..."
-              className="flex-1 border border-gray-300 rounded-md px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="flex-1 border border-gray-300 rounded-md px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-600"
             />
             {situacao && <input type="hidden" name="situacao" value={situacao} />}
             {tipoServico && <input type="hidden" name="tipoServico" value={tipoServico} />}
@@ -103,7 +103,7 @@ export default async function ProcessosPage({ searchParams }: PageProps) {
             <div className="flex flex-wrap gap-2">
               <Link
                 href={buildUrl({ situacao: undefined, page: "1" })}
-                className={`px-3 py-1 rounded-full text-xs font-medium ${!situacao ? "bg-blue-100 text-blue-700" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}
+                className={`px-3 py-1 rounded-full text-xs font-medium ${!situacao ? "bg-brand-100 text-brand-700" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}
               >
                 Todos
               </Link>
@@ -164,7 +164,7 @@ export default async function ProcessosPage({ searchParams }: PageProps) {
                     <td className="px-4 py-3 text-sm">
                       <Link
                         href={`/processos/${proc.id}`}
-                        className="font-medium text-blue-600 hover:underline"
+                        className="font-medium text-brand-600 hover:underline"
                       >
                         #{proc.ordem}
                       </Link>

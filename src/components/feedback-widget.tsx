@@ -15,7 +15,7 @@ export function FeedbackWidget({ projectId, apiOrigin, children }: Props) {
     <FeedbackProvider
       projectId={projectId}
       apiOrigin={apiOrigin}
-      color="#166534"
+      color="#183747"
       position="bottom-right"
     >
       {children}

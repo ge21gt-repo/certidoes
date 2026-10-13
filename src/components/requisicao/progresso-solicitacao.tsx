@@ -56,7 +56,7 @@ export function ProgressoSolicitacao({ etapas }: { etapas: EtapaProgresso[] }) {
           className="h-2 overflow-hidden rounded-full bg-gray-200"
         >
           <div
-            className="h-full bg-emerald-700 transition-all motion-reduce:transition-none"
+            className="h-full bg-brand-800 transition-all motion-reduce:transition-none"
             style={{ width: `${Math.max(pct, 4)}%` }}
           />
         </div>
@@ -95,7 +95,7 @@ export function ProgressoSolicitacao({ etapas }: { etapas: EtapaProgresso[] }) {
               cy="28"
               r={raio}
               fill="none"
-              stroke="#047857"
+              stroke="var(--color-brand-800)"
               strokeWidth="6"
               strokeLinecap="round"
               strokeDasharray={circunferencia}

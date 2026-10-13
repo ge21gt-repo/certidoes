@@ -3,21 +3,79 @@
 /* A plataforma tem só o tema claro: todas as telas usam fundos claros fixos (bg-white, bg-gray-50). */
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #020817;
   color-scheme: light;
+}
+
+/*
+ * Identidade visual (#PEND-38): a paleta do portal IDE-SP com a logo do IGC.
+ * A fonte da verdade das cores é este bloco; `src/lib/paleta.test.ts` lê os valores daqui e
+ * falha se uma combinação de texto e fundo cair abaixo de AA (4,5:1). Regras de uso em
+ * `docs/identidade-visual.md`:
+ *  - `brand-*` é a marca (botão primário, links, foco, item ativo);
+ *  - `gray-*` são os neutros azulados do IDE-SP (substituem os cinzas do Tailwind em todas as telas);
+ *  - `areia-*` e `marca-*` são acentos (faixa de navegação, detalhes); `gray-400`, `areia-600` e
+ *    `marca-500` NÃO passam em AA: só decoração, nunca texto nem botão pequeno;
+ *  - verde, âmbar e vermelho continuam semânticos (sucesso, alerta, erro): não são marca.
+ */
+@theme {
+  /* Marca: azul-petróleo e azul */
+  --color-brand-50: #e6eff4;
+  --color-brand-100: #cfe1ea;
+  --color-brand-200: #a6c6d6;
+  --color-brand-300: #78a5bd;
+  --color-brand-400: #4d87a5;
+  --color-brand-500: #3d7896;
+  --color-brand-600: #2d6986;
+  --color-brand-700: #1f4f69;
+  --color-brand-800: #183747;
+  --color-brand-900: #0f2733;
+  --color-brand-950: #091a22;
+
+  /* Neutros azulados do IDE-SP (sobrescrevem o cinza do Tailwind) */
+  --color-gray-50: #f6f7f9;
+  --color-gray-100: #eff2f5;
+  --color-gray-200: #e4e7ec;
+  --color-gray-300: #cdd3dd;
+  --color-gray-400: #98a2b3;
+  --color-gray-500: #5f6c85;
+  --color-gray-600: #46536c;
+  --color-gray-700: #39465b;
+  --color-gray-800: #212e40;
+  --color-gray-900: #020817;
+  --color-gray-950: #01040f;
+
+  /* Areia e acento da marca */
+  --color-areia-100: #e9e6dd;
+  --color-areia-600: #8a8066;
+  --color-areia-700: #6b6148;
+  --color-marca-100: #fbdada;
+  --color-marca-500: #ed5b5b;
+
+  /* Erro e ação destrutiva (semântico): a escala de erro da família do IDE-SP */
+  --color-red-50: #fef3f2;
+  --color-red-100: #fee4e2;
+  --color-red-200: #fecdca;
+  --color-red-300: #fda29b;
+  --color-red-400: #f97066;
+  --color-red-500: #f04438;
+  --color-red-600: #d42a1e;
+  --color-red-700: #b42318;
+  --color-red-800: #912018;
+  --color-red-900: #7a271a;
+  --color-red-950: #55160c;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Padrões de interação: valem para toda a plataforma. Estão em `base` para um
@@ -27,15 +85,27 @@ body {
   input,
   textarea,
   select {
-    color: #111827;
+    color: var(--color-gray-900);
     background-color: #ffffff;
     color-scheme: light;
     font-weight: 400;
   }
 
+  /* gray-500 (5,3:1 sobre branco, 4,9:1 sobre gray-50). */
   ::placeholder {
-    color: #6b7280;
+    color: var(--color-gray-500);
     opacity: 1;
+  }
+
+  ::selection {
+    background-color: var(--color-brand-100);
+    color: var(--color-gray-900);
+  }
+
+  /* Foco por teclado sempre visível, na cor da marca (2D6986: 6,0:1 sobre branco). */
+  :where(a, button, input, select, textarea, summary, [role="button"], [tabindex]):focus-visible {
+    outline: 2px solid var(--color-brand-600);
+    outline-offset: 2px;
   }
 
   /* O Tailwind 4 deixou de pôr cursor de mão nos botões. */

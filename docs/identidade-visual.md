@@ -46,7 +46,7 @@ Fonte: **Inter** (`next/font/google` em `src/app/layout.tsx`); Geist Mono contin
 
 ## 5. Limites e pendências
 
-- **A paleta é a do IDE-SP, não a do IGC** (preto, branco e vermelho `#FF161F`). Confirmar com o cliente: #PEND-57.
-- **A logo é provisória** (PNG 176×141 px, fundo branco). Falta SVG ou PNG de alta resolução e uma versão para fundo escuro: #PEND-56.
+- **A paleta é a do IDE-SP, não a do IGC** (preto, branco e vermelho `#FF161F`). Confirmar com o cliente: #PEND-58.
+- **A logo é provisória** (PNG 176×141 px, fundo branco). Falta SVG ou PNG de alta resolução e uma versão para fundo escuro: #PEND-57.
 - Ícones decorativos em `gray-400` (≈2,6:1) não são texto e foram mantidos; se um ícone passar a carregar significado sozinho, usar `gray-500` ou mais escuro.
 - O backoffice não foi desenhado para celular (barra lateral fixa de 16 rem); só o portal é responsivo.

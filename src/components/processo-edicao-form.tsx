@@ -55,6 +55,8 @@ interface ProcessoEdicaoFormProps {
   tecnicos: UsuarioOpcao[];
   /** Usuários que a API aceita como conferente (CONFERENTE ou ADMIN). */
   conferentes: UsuarioOpcao[];
+  /** GERENTE: só a atribuição de técnico e conferente (a API recusa os demais campos). */
+  apenasAtribuicao?: boolean;
 }
 
 const SECOES: SecaoDef[] = [
@@ -116,7 +118,9 @@ const SECOES: SecaoDef[] = [
     titulo: "Financeiro, Prioridade e Saida",
     campos: [
       { nome: "taxaAbertura", rotulo: "Taxa Abertura (R$)", tipo: "dinheiro" },
+      { nome: "servicoTecGabinete", rotulo: "Serv. Gabinete (R$)", tipo: "dinheiro" },
       { nome: "taxaVistoria", rotulo: "Taxa Vistoria (R$)", tipo: "dinheiro" },
+      { nome: "servicoTecCampo", rotulo: "Serv. Campo (R$)", tipo: "dinheiro" },
       { nome: "nivelPrioridade", rotulo: "Nivel de Prioridade", tipo: "texto" },
       { nome: "statusEscritorio", rotulo: "Status do Escritorio", tipo: "texto" },
       { nome: "numeroSaidaIGC", rotulo: "N. Saida IGC", tipo: "texto" },
@@ -182,6 +186,7 @@ export function ProcessoEdicaoForm({
   inicial,
   tecnicos,
   conferentes,
+  apenasAtribuicao = false,
 }: ProcessoEdicaoFormProps) {
   const router = useRouter();
   // Valores que já vêm do servidor (CPF sem pontos, telefone cru) abrem formatados.
@@ -216,7 +221,7 @@ export function ProcessoEdicaoForm({
 
     const novosErros: Record<string, string> = {};
     const payload: Record<string, string | number | null> = {};
-    for (const campo of TODOS_OS_CAMPOS) {
+    for (const campo of apenasAtribuicao ? [] : TODOS_OS_CAMPOS) {
       // Campo que o usuário não tocou não é validado nem enviado (dado antigo pode estar fora do padrão).
       if ((valores[campo.nome] ?? "") === (inicialMascarado[campo.nome] ?? "")) continue;
       const atual = converter(campo, valores[campo.nome] ?? "");
@@ -247,6 +252,7 @@ export function ProcessoEdicaoForm({
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
+        if (typeof data.campo === "string") setErrosCampo({ [data.campo]: data.error });
         mostrarErro(data.error || "Erro ao salvar o processo.");
         return;
       }
@@ -271,7 +277,7 @@ export function ProcessoEdicaoForm({
         </div>
       )}
 
-      {SECOES.map((secao) => (
+      {SECOES.filter((secao) => !apenasAtribuicao || secao.id === "tecnico").map((secao) => (
         <section
           key={secao.id}
           aria-labelledby={`sec-${secao.id}`}
@@ -304,7 +310,7 @@ export function ProcessoEdicaoForm({
 
           <div className="grid sm:grid-cols-2 gap-4">
             {secao.campos
-              .filter((c) => !c.largo)
+              .filter((c) => !c.largo && !apenasAtribuicao)
               .map((c) => (
                 <Campo
                   key={c.nome}
@@ -316,7 +322,7 @@ export function ProcessoEdicaoForm({
               ))}
           </div>
           {secao.campos
-            .filter((c) => c.largo)
+            .filter((c) => c.largo && !apenasAtribuicao)
             .map((c) => (
               <div key={c.nome} className="mt-4">
                 <Campo

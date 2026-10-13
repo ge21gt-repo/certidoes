@@ -4,7 +4,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
-  Scissors, Loader2, Map as MapIcon, MousePointerClick, Search, Layers, Upload, PenTool, Download, Trash2,
+  Scissors, Loader2, Map as MapIcon, MousePointerClick, Search, Layers, Upload, PenTool, Download, Trash2, FolderOpen,
 } from "lucide-react";
 import { WORKFLOW_STAGES, type WorkflowStage } from "@/lib/workflow";
 
@@ -32,24 +32,30 @@ const ZOOM_MIN_SIGEF = 12;
 const IDESP_WMS = "https://www.idesp.sp.gov.br/geoserver/idesp/wms";
 const IDESP_LIMITES_MUNICIPAIS = "idesp:dradt_mvw_lml_municipio_a_2021";
 
-const CDN = {
-  leafletCss: "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css",
-  leafletJs: "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js",
-  geomanCss: "https://unpkg.com/@geoman-io/leaflet-geoman-free@2.17.0/dist/leaflet-geoman.css",
-  geomanJs: "https://unpkg.com/@geoman-io/leaflet-geoman-free@2.17.0/dist/leaflet-geoman.min.js",
-  shpJs: "https://unpkg.com/shpjs@6.1.0/dist/shp.js",
+type Recurso = { href: string; integrity: string };
+
+/** Bibliotecas de mapa do unpkg, em versao fixa e com hash SRI (sha384) para o navegador recusar conteudo alterado. */
+const CDN: Record<"leafletCss" | "leafletJs" | "geomanCss" | "geomanJs" | "shpJs", Recurso> = {
+  leafletCss: { href: "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css", integrity: "sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H" },
+  leafletJs: { href: "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js", integrity: "sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH" },
+  geomanCss: { href: "https://unpkg.com/@geoman-io/leaflet-geoman-free@2.17.0/dist/leaflet-geoman.css", integrity: "sha384-nfYqa/3Xh7kCl9/bO8fCcmqGuhuVWAle+CQgdE/LdgaQiO6fSkKh8C0fLdCVrrQJ" },
+  geomanJs: { href: "https://unpkg.com/@geoman-io/leaflet-geoman-free@2.17.0/dist/leaflet-geoman.min.js", integrity: "sha384-7CTDkMmRSjHvjl8ftuwzLq/ogrEnsuNoi3825eH06KuMNWWwcfaNIHol5+I3EAzO" },
+  shpJs: { href: "https://unpkg.com/shpjs@6.1.0/dist/shp.js", integrity: "sha384-GIFORW2IBzirKvqqzlZo1DpZjgz7m+VmIHO0CWEZ8vnUPv2CVCIVe0+XEc5o7ltT" },
 };
 
-function carregarCss(id: string, href: string) {
+function carregarCss(id: string, recurso: Recurso) {
   if (document.getElementById(id)) return;
   const link = document.createElement("link");
   link.id = id;
   link.rel = "stylesheet";
-  link.href = href;
+  link.href = recurso.href;
+  link.integrity = recurso.integrity;
+  link.crossOrigin = "anonymous";
   document.head.appendChild(link);
 }
 
-function carregarScript(src: string): Promise<void> {
+function carregarScript(recurso: Recurso): Promise<void> {
+  const src = recurso.href;
   return new Promise((resolve, reject) => {
     const existente = document.querySelector(`script[src="${src}"]`) as HTMLScriptElement | null;
     if (existente?.dataset.carregado) return resolve();
@@ -61,6 +67,8 @@ function carregarScript(src: string): Promise<void> {
     script.addEventListener("error", () => reject(new Error(`Falha ao carregar ${src}`)));
     if (!existente) {
       script.src = src;
+      script.integrity = recurso.integrity;
+      script.crossOrigin = "anonymous";
       document.body.appendChild(script);
     }
   });
@@ -155,7 +163,7 @@ function popupParcela(parcela: any) {
   );
 }
 
-/** Processo ligado ao mapa por `?processo=` (botão "Corte de divisas" da tela do processo). */
+/** Processo ligado ao mapa por `?processo=` (botão "Pré-análise de divisas" da tela do processo). */
 type Vinculo =
   | { estado: "nenhum" }
   | { estado: "carregando" }
@@ -192,6 +200,7 @@ export default function GeometriaPage() {
   const [carregandoSigef, setCarregandoSigef] = useState(false);
   const [totalSigefVisivel, setTotalSigefVisivel] = useState<number | null>(null);
   const [totalSigefImportado, setTotalSigefImportado] = useState<number | null>(null);
+  const [sigefSincronizadoEm, setSigefSincronizadoEm] = useState<string | null>(null);
   const sigefLayerRef = useRef<any>(null);
   const selecaoRef = useRef<any>(null);
   const mostrarSigefRef = useRef(false);
@@ -205,6 +214,11 @@ export default function GeometriaPage() {
   const proprietarioLayerRef = useRef<any>(null);
   const proprietarioFcRef = useRef<any>(null);
   const arquivoRef = useRef<HTMLInputElement>(null);
+  const [camadaLimites, setCamadaLimites] = useState<Camada | null>(null);
+  const [carregandoLimites, setCarregandoLimites] = useState(false);
+  const limitesArquivoLayerRef = useRef<any>(null);
+  const limitesArquivoRef = useRef<HTMLInputElement>(null);
+  const pedidoLimitesRef = useRef(0);
   const [modoRascunho, setModoRascunho] = useState(false);
   const [rascunhoTotal, setRascunhoTotal] = useState(0);
   const desenhandoRef = useRef(false);
@@ -349,19 +363,7 @@ export default function GeometriaPage() {
     setErro(null);
     try {
       const nome = arquivo.name;
-      const ext = nome.toLowerCase().split(".").pop() ?? "";
-      let fc: any;
-      if (ext === "zip") {
-        await carregarScript(CDN.shpJs);
-        fc = normalizarGeoJSON(await (window as any).shp(await arrayBufferDe(arquivo)));
-      } else if (ext === "kml") {
-        fc = kmlParaGeoJSON(await arquivo.text());
-      } else if (ext === "geojson" || ext === "json") {
-        fc = normalizarGeoJSON(JSON.parse(await arquivo.text()));
-      } else {
-        throw new Error("Formato nao suportado: envie .geojson, .json, .kml ou .zip (shapefile)");
-      }
-      if (!fc.features.length) throw new Error("O arquivo nao contem feicoes geograficas");
+      const fc = await lerArquivoGeografico(arquivo);
       removerCamadaProprietario();
       const layer = L.geoJSON(fc, {
         style: { color: "#ea580c", weight: 3, fillColor: "#fb923c", fillOpacity: 0.2 },
@@ -386,6 +388,71 @@ export default function GeometriaPage() {
       setCarregandoArquivo(false);
       if (arquivoRef.current) arquivoRef.current.value = "";
     }
+  }
+
+  /** Le GeoJSON, KML ou shapefile zipado e devolve uma FeatureCollection normalizada. */
+  async function lerArquivoGeografico(arquivo: File): Promise<any> {
+    const ext = arquivo.name.toLowerCase().split(".").pop() ?? "";
+    let fc: any;
+    if (ext === "zip") {
+      await carregarScript(CDN.shpJs);
+      fc = normalizarGeoJSON(await (window as any).shp(await arrayBufferDe(arquivo)));
+    } else if (ext === "kml") {
+      fc = kmlParaGeoJSON(await arquivo.text());
+    } else if (ext === "geojson" || ext === "json") {
+      fc = normalizarGeoJSON(JSON.parse(await arquivo.text()));
+    } else {
+      throw new Error("Formato nao suportado: envie .geojson, .json, .kml ou .zip (shapefile)");
+    }
+    if (!fc.features.length) throw new Error("O arquivo nao contem feicoes geograficas");
+    return fc;
+  }
+
+  /** Limites de municipios enviados em arquivo (KML ou shapefile) para a pré-análise, sobre o mapa base. */
+  async function abrirLimitesMunicipais(arquivo: File) {
+    const L = (window as any).L;
+    const map = mapRef.current;
+    if (!map) return;
+    const pedido = ++pedidoLimitesRef.current;
+    setCarregandoLimites(true);
+    setErro(null);
+    try {
+      const nome = arquivo.name;
+      const fc = await lerArquivoGeografico(arquivo);
+      if (pedido !== pedidoLimitesRef.current) return;
+      const layer = L.geoJSON(fc, {
+        style: { color: "#7c3aed", weight: 2, dashArray: "6 4", fillOpacity: 0 },
+        pointToLayer: (_f: any, latlng: any) => L.circleMarker(latlng, { radius: 4, color: "#7c3aed" }),
+        onEachFeature: (f: any, l: any) => {
+          const props = f.properties ?? {};
+          const linhas = Object.entries(props)
+            .filter(([, v]) => v !== null && v !== "" && typeof v !== "object")
+            .slice(0, 12)
+            .map(([k, v]) => `<b>${esc(k)}</b>: ${esc(v)}`);
+          l.bindPopup(`<div style="font-size:12px"><b>Limites de municipios (pré-análise) — ${esc(nome)}</b><br/>${linhas.join("<br/>")}</div>`);
+        },
+      });
+      removerLimitesMunicipais();
+      layer.addTo(map);
+      limitesArquivoLayerRef.current = layer;
+      const poligonos = fc.features.filter((f: any) => /Polygon$/.test(f.geometry?.type ?? "")).length;
+      setCamadaLimites({ nome, total: fc.features.length, poligonos });
+      const bounds = layer.getBounds();
+      if (bounds.isValid()) map.fitBounds(bounds.pad(0.2));
+    } catch (e) {
+      if (pedido !== pedidoLimitesRef.current) return;
+      setErro((e as Error).message || "Falha ao abrir o arquivo de limites de municipios");
+    } finally {
+      setCarregandoLimites(false);
+      if (limitesArquivoRef.current) limitesArquivoRef.current.value = "";
+    }
+  }
+
+  function removerLimitesMunicipais() {
+    pedidoLimitesRef.current++;
+    if (limitesArquivoLayerRef.current) mapRef.current?.removeLayer(limitesArquivoLayerRef.current);
+    limitesArquivoLayerRef.current = null;
+    setCamadaLimites(null);
   }
 
   function arrayBufferDe(arquivo: File): Promise<ArrayBuffer> {
@@ -552,8 +619,10 @@ export default function GeometriaPage() {
       try {
         const total = await (await fetch("/api/sigef/parcelas?uf=SP")).json();
         setTotalSigefImportado(total.total ?? null);
+        setSigefSincronizadoEm(total.sincronizacao?.iniciadoEm ?? null);
       } catch {
         setTotalSigefImportado(null);
+        setSigefSincronizadoEm(null);
       }
     } else {
       pedidoSigefRef.current++;
@@ -655,7 +724,7 @@ export default function GeometriaPage() {
         body: JSON.stringify({ imovel, processId: processId || undefined }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Erro no corte");
+      if (!res.ok) throw new Error(data.error || "Erro na pré-análise");
       setResultado(data);
       setProcessoGravado(processId || null);
       data.fragmentos.forEach((f: any, i: number) =>
@@ -672,7 +741,7 @@ export default function GeometriaPage() {
     <div className="p-6 max-w-6xl mx-auto space-y-4">
       <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
         <MapIcon className="h-6 w-6 text-brand-600" />
-        Corte de Divisas — Geometria do Imovel
+        Pré-análise de Divisas — Geometria do Imóvel
       </h1>
 
       {vinculo.estado === "carregando" && (
@@ -719,11 +788,14 @@ export default function GeometriaPage() {
             {mostrarSigef && (
               <p className="text-[11px] text-violet-700">
                 {totalSigefImportado === 0
-                  ? "Nenhuma parcela importada — rode scripts/import-sigef-shp.ts com o shapefile do acervo do INCRA."
+                  ? "Nenhuma parcela no acervo — a sincronização diária com o INCRA (02:00) ainda não carregou as parcelas."
                   : totalSigefVisivel === null
                     ? `Aproxime o mapa (zoom ${ZOOM_MIN_SIGEF}+) para carregar as parcelas do SIGEF.`
                     : `${totalSigefVisivel} parcelas nesta janela — contorno violeta` +
-                      (totalSigefImportado === null ? "." : `, de ${totalSigefImportado.toLocaleString("pt-BR")} importadas de SP.`)}
+                      (totalSigefImportado === null ? "." : `, de ${totalSigefImportado.toLocaleString("pt-BR")} de SP.`) +
+                      (sigefSincronizadoEm
+                        ? ` Acervo INCRA sincronizado em ${new Date(sigefSincronizadoEm).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })}.`
+                        : "")}
               </p>
             )}
             <label className="flex items-center gap-2 text-xs font-medium text-violet-900 cursor-pointer">
@@ -766,6 +838,42 @@ export default function GeometriaPage() {
             {mostrarLimitesIgc && (
               <p className="text-[11px] text-amber-700">
                 Base oficial de limites municipais do IGC, servida pelo GeoServer da IDESP (WMS), sobre o mapa base.
+              </p>
+            )}
+            <div className="flex items-center gap-2 flex-wrap">
+              <input
+                ref={limitesArquivoRef}
+                type="file"
+                accept=".kml,.zip,.geojson,.json"
+                className="hidden"
+                onChange={(e) => {
+                  const arquivo = e.target.files?.[0];
+                  if (arquivo) abrirLimitesMunicipais(arquivo);
+                }}
+              />
+              <button
+                type="button"
+                onClick={() => limitesArquivoRef.current?.click()}
+                disabled={!pronto || carregandoLimites}
+                title="Abrir arquivo KML ou shapefile (.zip) com limites de municipios para a pré-análise, sobre o mapa base"
+                className="flex items-center gap-1.5 text-xs bg-violet-700 text-white px-3 py-1.5 rounded-md font-medium hover:bg-violet-800 disabled:opacity-50"
+              >
+                {carregandoLimites ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <FolderOpen className="h-3.5 w-3.5" />}
+                Abrir limites de municípios (KML/shapefile)
+              </button>
+              {camadaLimites && (
+                <button
+                  type="button"
+                  onClick={removerLimitesMunicipais}
+                  className="flex items-center gap-1 text-xs text-amber-900 px-2 py-1.5 rounded-md hover:bg-amber-100"
+                >
+                  <Trash2 className="h-3.5 w-3.5" /> Remover
+                </button>
+              )}
+            </div>
+            {camadaLimites && (
+              <p className="text-[11px] text-amber-700">
+                {camadaLimites.nome}: {camadaLimites.total} feições ({camadaLimites.poligonos} polígonos) — contorno roxo tracejado, para pré-análise.
               </p>
             )}
             <div className="flex items-center gap-2 flex-wrap">
@@ -892,7 +1000,7 @@ export default function GeometriaPage() {
           </p>
           {vinculo.estado === "ok" ? (
             <p className="rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-xs text-gray-700">
-              Corte será gravado no processo <strong>#{vinculo.ordem}</strong>.
+              Pré-análise será gravada no processo <strong>#{vinculo.ordem}</strong>.
             </p>
           ) : (
             <>
@@ -904,7 +1012,7 @@ export default function GeometriaPage() {
                 className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"
               />
               <p className="text-xs text-gray-600">
-                Dica: para abrir o mapa já ligado a um processo, use o botão &quot;Corte de divisas&quot; na tela do processo.
+                Dica: para abrir o mapa já ligado a um processo, use o botão &quot;Pré-análise de divisas&quot; na tela do processo.
               </p>
             </>
           )}
@@ -914,9 +1022,9 @@ export default function GeometriaPage() {
             className="w-full flex items-center justify-center gap-2 bg-brand-800 text-white py-2.5 rounded-md text-sm font-medium hover:bg-brand-900 disabled:opacity-50"
           >
             {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Scissors className="h-4 w-4" />}
-            Calcular corte
+            Calcular pré-análise
           </button>
-          {erro && <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded p-2">{erro}</p>}
+          {erro && <p role="alert" className="text-sm text-red-600 bg-red-50 border border-red-200 rounded p-2">{erro}</p>}
 
           {resultado && (
             <div className="border-t border-gray-100 pt-3">
@@ -938,7 +1046,7 @@ export default function GeometriaPage() {
               )}
               {processoGravado && (
                 <p className="mt-2 text-sm text-gray-800">
-                  Corte gravado no processo{" "}
+                  Pré-análise gravada no processo{" "}
                   {vinculo.estado === "ok" && vinculo.id === processoGravado ? `#${vinculo.ordem}` : "informado"}.{" "}
                   <Link href={`/processos/${processoGravado}/certidao`} className="text-brand-600 underline">
                     Ver minuta da certidão

@@ -46,8 +46,8 @@ O banco local tem **muito dado de teste** (≈85 requisições com nomes como "T
 | Papel | E-mail | Para que usar na call |
 | --- | --- | --- |
 | **ADMIN** | `admin@igc.sp.gov.br` | **Usuário principal.** Faz tudo: atendimento (DDD), análise de duplicidade, processos, corte, usuários. |
-| SDTC (= "DDD") | `sdtc@igc.sp.gov.br` | Mostrar que a DDD (ADMIN + SDTC) atende as requisições: chat, devolver, liberar, desarquivar. **Não** vê "Corte de Divisas" nem "Usuários"; **não** tem "Rodar análise agora" (só ADMIN). |
-| TÉCNICO | `thiago@igc.sp.gov.br` (também `ana@`, `pedro@`) | Técnico responsável: confirma o nível de complexidade e usa o **Corte de Divisas**; abre a lista de Requisições mas **sem** as ações de atendimento (chat, devolver, liberar, abrir processo). |
+| SDTC (= "DDD") | `sdtc@igc.sp.gov.br` | Mostrar que a DDD (ADMIN + SDTC) atende as requisições: chat, devolver, liberar, desarquivar. **Não** vê "Pré-análise de Divisas" nem "Usuários"; **não** tem "Rodar análise agora" (só ADMIN). |
+| TÉCNICO | `thiago@igc.sp.gov.br` (também `ana@`, `pedro@`) | Técnico responsável: confirma o nível de complexidade e usa o **Pré-análise de Divisas**; abre a lista de Requisições mas **sem** as ações de atendimento (chat, devolver, liberar, abrir processo). |
 | Conferente | `marcos@igc.sp.gov.br` | Só se perguntarem do fluxo de conferência. |
 | Gerente / Diretor | `gerente@igc.sp.gov.br` · `diretor@igc.sp.gov.br` | Só se perguntarem das assinaturas. |
 
@@ -74,7 +74,7 @@ Base: `http://localhost:3000`
 | Nova Requisição (portal) | `/portal/nova-solicitacao` |
 | Cadastro do solicitante | `/portal/cadastro` |
 | Requisições (atendimento/DDD) | `/requisicoes` · nova pelo atendimento: `/requisicoes/nova` |
-| Processos · Quadro · Corte de divisas | `/processos` · `/quadro` · `/geometria` |
+| Processos · Quadro · Pré-análise de divisas | `/processos` · `/quadro` · `/geometria` |
 | Dashboard · Usuários · Clientes | `/` · `/usuarios` · `/clientes` |
 
 ### 2.2 Casos prontos (todos do "Cidadao de Teste")
@@ -101,7 +101,7 @@ Use o PDF como pano de fundo, **com os números atualizados**:
 
 - O documento do cliente (16/09) tem **29 pedidos**. **27 atendidos** (93%): 14 só de frontend, 11 de frontend e backend, 2 só de backend. **1 depende do cliente** (#2, e-mail/SMS do cadastro) e **1 está sem definição** (#29, "Bloco 2 – Recebimento DDD", página em branco).
 - **Novidade desde o relatório de 07/10:** o pedido **#1 (cores e logos) foi atendido** com a paleta do portal IDE-SP e a logo do IGC (a do Governo do Estado de SP **não** foi usada). Ver Bloco 1.
-- **12 entregas além do documento** (edição do processo, corte de divisas no menu, máscaras, contraste, desarquivar, cartões de situação etc.).
+- **12 entregas além do documento** (edição do processo, pré-análise de divisas no menu, máscaras, contraste, desarquivar, cartões de situação etc.).
 - **57 pendências registradas** (24 resolvidas, 3 descartadas, 30 abertas: 13 backend, 10 negócio, 5 infra, 2 frontend). **Quatro delas são decisões que dependem do CJT**; fecharemos a call com elas (Bloco 11).
 - O trabalho foi feito em fases, **cada uma com proposta visual aprovada, teste no navegador e um commit**; tudo está documentado em `docs/`.
 
@@ -119,7 +119,7 @@ Use o PDF como pano de fundo, **com os números atualizados**:
 2. **[Portal]** `/portal/login` → cabeçalho **branco com a logo do IGC** e a **faixa bege** de navegação; "Acesse com sua conta gov.br" (login simulado; selo gov.br saiu).
 3. **[Back]** entre como **admin** → **Dashboard**: barra lateral com a logo, item ativo em azul claro, cartões e chips de etapa.
 4. Fale rápido de **acessibilidade**: contraste AA conferido em 21 telas, foco por teclado visível (aperte `Tab` duas vezes e mostre o anel azul), fonte Inter, funciona a 375 px de largura no portal.
-5. **Pontos para o cliente decidir** (anote): a paleta aplicada é a do **IDE-SP** (a identidade do site do IGC é preto, branco e vermelho) → confirmar (**#PEND-57**); a **logo é provisória** (arquivo pequeno do histórico do repositório) → precisamos do arquivo em **SVG ou PNG de alta resolução** e de uma versão para fundo escuro (**#PEND-56**). Trocar cores/logo depois é rápido (tokens em um arquivo).
+5. **Pontos para o cliente decidir** (anote): a paleta aplicada é a do **IDE-SP** (a identidade do site do IGC é preto, branco e vermelho) → confirmar (**#PEND-58**); a **logo é provisória** (arquivo pequeno do histórico do repositório) → precisamos do arquivo em **SVG ou PNG de alta resolução** e de uma versão para fundo escuro (**#PEND-57**). Trocar cores/logo depois é rápido (tokens em um arquivo).
 
 ### Bloco 2 — Portal: Minhas Requisições e Status Geral (#21) · 4 min
 
@@ -172,15 +172,15 @@ Use o PDF como pano de fundo, **com os números atualizados**:
 2. **#18 Devolver:** **[Back]** abra uma requisição **pendente e sem processo** (ex.: **CERT-2026-000076**) → seção **Devolver ao solicitante** → **Motivo da devolução** (mín. 10 caracteres): `Anexe a matrícula atualizada e confira o nome do proprietário.` → **Devolver requisição**.
 3. **[Portal]** na requisição: "A equipe devolveu sua requisição." com o motivo e o botão **Alterar requisição**. Mostre que **só depois da devolução** o formulário abre para edição (antes: "Sua requisição está em análise e não pode ser alterada"). Altere um campo e reenvie.
 
-### Bloco 7 — Do atendimento ao processo, SEI e corte de divisas (#25, #23) · 8 min
+### Bloco 7 — Do atendimento ao processo, SEI e pré-análise de divisas (#25, #23) · 8 min
 
 1. **[Back]** na requisição nova (a do Bloco 3, já respondida):
    - **Marcar documentos como conferidos** (aparece no chat e vira a subetapa "Checagem de documentos").
    - Em **Abertura de Processo**, **Expediente SEI** = `00456.123456/2026-10` → **Abrir processo na entrada do SDTC**. O sistema abre o **Processo #N** (Entrada SDTC) e leva você a ele. **#25:** o número SEI aparece para o solicitante.
 2. No processo: **Editar processo** (expediente, técnico responsável, datas, taxas — **[opcional]**, 1 min) e o **Histórico de transições**.
-3. **#23 Corte de divisas:** botão **Corte de divisas** → abre `/geometria?processo=…` com a parcela como **"Polígono em análise"** → **Calcular corte** → "**Caso: FÁCIL · Nível sugerido: 1** — longe da divisa, 1 polígono. O técnico responsável confirma o nível no processo. Corte gravado no processo #N. Ver minuta da certidão."
-4. Volte ao processo (**Abrir processo** no topo da tela de corte). Em **Ações do Workflow → Mover para:** clique **Distribuicao GDAT** e depois **Analise Tecnica**.
-5. Em **Nível de complexidade**: "Sugerido pelo corte de …: 1." Escolha **3** em **Nível (1 a 9)** → **Confirmar nível** → "Nível 3 confirmado. O solicitante já o vê no acompanhamento." (O técnico responsável — ou ADMIN — confirma; o solicitante só vê **depois** da confirmação.)
+3. **#23 Pré-análise de divisas:** botão **Pré-análise de divisas** → abre `/geometria?processo=…` com a parcela como **"Polígono em análise"** → **Calcular pré-análise** → "**Caso: FÁCIL · Nível sugerido: 1** — longe da divisa, 1 polígono. O técnico responsável confirma o nível no processo. Pré-análise gravada no processo #N. Ver minuta da certidão."
+4. Volte ao processo (**Abrir processo** no topo da tela de pré-análise). Em **Ações do Workflow → Mover para:** clique **Distribuicao GDAT** e depois **Analise Tecnica**.
+5. Em **Nível de complexidade**: "Sugerido pela pré-análise de …: 1." Escolha **3** em **Nível (1 a 9)** → **Confirmar nível** → "Nível 3 confirmado. O solicitante já o vê no acompanhamento." (O técnico responsável — ou ADMIN — confirma; o solicitante só vê **depois** da confirmação.)
 6. **[opcional]** **Minuta da Certidao** (`/processos/{id}/certidao`) — abre a minuta; não mudou de aparência.
 
 ### Bloco 8 — O que o solicitante vê no acompanhamento (#22, #25, #26, #27) · 5 min
@@ -204,7 +204,7 @@ Use o PDF como pano de fundo, **com os números atualizados**:
 
 - **Máscaras** de CPF/CNPJ/telefone: **[Back]** `/clientes` ("Cadastro de Cliente") ou `/requisicoes/nova`; digite com letras, cole com e sem pontuação.
 - **Edição do processo** em página própria (**Editar processo**) e **Quadro** (`/quadro`, kanban por etapa).
-- **Usuários** (`/usuarios`, ADMIN): papéis e quem acessa o quê. Entre como **thiago@** (técnico) e mostre que ele **não vê** "Usuários" e que, em Requisições, **não tem** as ações de atendimento (chat, devolver, abrir processo); entre como **sdtc@** e mostre que ele **não vê** "Corte de Divisas".
+- **Usuários** (`/usuarios`, ADMIN): papéis e quem acessa o quê. Entre como **thiago@** (técnico) e mostre que ele **não vê** "Usuários" e que, em Requisições, **não tem** as ações de atendimento (chat, devolver, abrir processo); entre como **sdtc@** e mostre que ele **não vê** "Pré-análise de Divisas".
 - **Cartões de situação** do atendimento, **desarquivar**, **testes automatizados** (189 testes de regra + 45 do contraste da paleta = **234**), **documentação** em `docs/`.
 
 ### Bloco 11 — Fechamento: o que precisamos do CJT · 5 min
@@ -215,7 +215,7 @@ Mostre o quadro e peça a **decisão** de cada item:
 | --- | --- | --- |
 | #2 | O que é a **confirmação do contato** (e-mail ou SMS, e o que acontece se não confirmar) | #PEND-37 |
 | #29 | **Conteúdo do "Bloco 2 – Recebimento DDD"** (a página 10 do documento está em branco) | — |
-| #1 | **Confirmar a paleta** (IDE-SP × cartela própria do IGC) e **enviar a logo** em SVG/PNG de alta resolução, com versão para fundo escuro | #PEND-57 · #PEND-56 |
+| #1 | **Confirmar a paleta** (IDE-SP × cartela própria do IGC) e **enviar a logo** em SVG/PNG de alta resolução, com versão para fundo escuro | #PEND-58 · #PEND-57 |
 | #20 | Confirmar as **regras de duplicidade** que o documento não detalha (mesma geometria com solicitantes diferentes, parcelas que só se encostam, repetições) | #PEND-53 |
 | #24 | **Aceitar arquivamento** deve **cancelar o processo aberto**? | #PEND-54 |
 | #22/#23 | Quem marca a **divisa como finalizada** e as hipóteses do **nível de complexidade** e da **subetapa "Expedição"** | #PEND-55 |
@@ -257,7 +257,7 @@ Próximos passos do nosso lado: ajustar o que a call decidir, **trocar a logo**,
 | A requisição nova não aparece em "Aguardando análise" | O agendador já rodou (12:00/00:00). Use **Rodar análise agora** só se ainda houver pendente; senão mostre o caso **CERT-2026-000081** (aguardando resposta). |
 | O mapa não carrega | Os mapas usam o OpenStreetMap: precisa de internet. Sem rede, mostre a lista **Polígono → Parcela** (que não depende do mapa). |
 | A requisição escolhida já foi consumida | Use outra da seção 2.2 (000075, 000074…) ou crie uma nova; as ações são independentes por requisição. |
-| Algum botão some | Confira o papel: o atendimento (chat, devolver, liberar, abrir processo) é de **ADMIN/SDTC**; "Rodar análise agora" só **ADMIN**; "Corte de Divisas" só **ADMIN/TÉCNICO**; "Usuários" só **ADMIN**. |
+| Algum botão some | Confira o papel: o atendimento (chat, devolver, liberar, abrir processo) é de **ADMIN/SDTC**; "Rodar análise agora" só **ADMIN**; "Pré-análise de Divisas" só **ADMIN/TÉCNICO**; "Usuários" só **ADMIN**. |
 
 ## 7. Perguntas prováveis
 

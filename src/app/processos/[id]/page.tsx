@@ -108,7 +108,7 @@ export default async function ProcessoDetailPage({ params, searchParams }: PageP
                 className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium bg-white text-gray-800 border border-gray-300 hover:bg-gray-50"
               >
                 <Scissors className="h-4 w-4" />
-                Corte de divisas
+                Pré-análise de divisas
               </Link>
             )}
             {/certid/i.test(processo.tipoServico) && (
@@ -383,7 +383,7 @@ export default async function ProcessoDetailPage({ params, searchParams }: PageP
               </div>
               <div className="flex justify-between pt-2 border-t border-gray-200">
                 <span className="font-medium text-gray-900">Total</span>
-                <span className="font-bold text-gray-900">R$ {(processo.total || 0).toFixed(2)}</span>
+                <span className="font-bold text-gray-900">R$ {totalFinanceiro(processo).toFixed(2)}</span>
               </div>
             </div>
           </div>
@@ -401,6 +401,18 @@ export default async function ProcessoDetailPage({ params, searchParams }: PageP
       </div>
     </div>
   );
+}
+
+/** `Process.total` gravado pela API ou, em processos antigos sem ele, a soma dos valores do cartao. */
+function totalFinanceiro(p: {
+  total: number | null;
+  taxaAbertura: number | null;
+  servicoTecGabinete: number | null;
+  taxaVistoria: number | null;
+  servicoTecCampo: number | null;
+}): number {
+  if (p.total !== null) return p.total;
+  return (p.taxaAbertura ?? 0) + (p.servicoTecGabinete ?? 0) + (p.taxaVistoria ?? 0) + (p.servicoTecCampo ?? 0);
 }
 
 function InfoField({ label, value }: { label: string; value: string | null | undefined }) {

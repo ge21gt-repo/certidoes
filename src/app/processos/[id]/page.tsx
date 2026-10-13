@@ -329,7 +329,7 @@ export default async function ProcessoDetailPage({ params, searchParams }: PageP
                           <span className={`px-2 py-0.5 rounded text-xs ${fromConfig?.bgLight} ${fromConfig?.textColor}`}>
                             {fromConfig?.label || action.fromStatus}
                           </span>
-                          <span className="text-gray-400">&rarr;</span>
+                          <span className="text-gray-500" aria-hidden="true">&rarr;</span>
                           <span className={`px-2 py-0.5 rounded text-xs ${toConfig?.bgLight} ${toConfig?.textColor}`}>
                             {toConfig?.label || action.toStatus}
                           </span>

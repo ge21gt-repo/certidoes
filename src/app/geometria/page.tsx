@@ -278,6 +278,8 @@ export default function GeometriaPage() {
     carregarCss("geoman-css", CDN.geomanCss);
     carregarScript(CDN.leafletJs).then(async () => {
       await carregarScript(CDN.geomanJs).catch(() => undefined);
+      // O Strict Mode do React (desenvolvimento) roda este efeito duas vezes: o segundo não recria o mapa.
+      if (mapRef.current) return;
       const L = (window as any).L;
       const map = L.map("mapa-divisas").setView([-22.2, -48.6], 6);
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {

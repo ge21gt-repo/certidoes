@@ -56,7 +56,7 @@ export function PainelDuplicidade({
           {ultima ? `Última execução: ${ultima.quando} (${ultima.resumo}).` : "Ainda não houve execução."}{" "}
           Próxima: {proxima}.{" "}
           <strong className="font-semibold text-gray-900">
-            {aguardando} requisição{aguardando === 1 ? "" : "ões"} aguardando análise.
+            {aguardando} {aguardando === 1 ? "requisição aguardando" : "requisições aguardando"} análise.
           </strong>
         </p>
         {mensagem && (

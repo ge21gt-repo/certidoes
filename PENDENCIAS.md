@@ -58,7 +58,7 @@ O **status** e a **prioridade** vivem só aqui; responsável e tipo aparecem tam
 | #PEND-35 | Matrícula "Usucapião" na validação e na persistência | backend | adição | média | resolvida (2026-10-07) |
 | #PEND-36 | Nomenclatura de polígonos e S/M–S/E validadas no servidor | backend | adição | média | resolvida (2026-10-07) |
 | #PEND-37 | Decisão: o que é "incluir e-mail para finalizar o cadastro (ou SMS)" | negócio | decisão | média | aberta |
-| #PEND-38 | Decisão: cartela de cores e logos do IGC | negócio | decisão | média | em andamento |
+| #PEND-38 | Decisão: cartela de cores e logos do IGC | negócio | decisão | média | resolvida (2026-10-08) |
 | #PEND-39 | Decisão: dúvidas do documento de correções de 2026-09-16 | negócio | decisão | média | aberta |
 | #PEND-40 | Texto auxiliar em `gray-400` abaixo do contraste AA (rodapé do portal) | frontend | melhoria | baixa | resolvida (2026-10-07) |
 | #PEND-41 | Máscaras de entrada nos formulários (telefone, CPF, CNPJ etc.) | frontend | adição | média | resolvida (2026-10-07) |
@@ -77,6 +77,7 @@ O **status** e a **prioridade** vivem só aqui; responsável e tipo aparecem tam
 | #PEND-54 | Decisão: aceitar o arquivamento não cancela o processo aberto | negócio | decisão | média | aberta |
 | #PEND-55 | Decisão: quem marca a divisa como finalizada e confirmar as hipóteses do nível de complexidade | negócio | decisão | média | aberta |
 | #PEND-56 | Logo do IGC em alta resolução (SVG ou PNG) e versão para fundo escuro | negócio | adição | média | aberta |
+| #PEND-57 | Decisão: confirmar com o IGC a paleta (a aplicada é a do IDE-SP) | negócio | decisão | média | aberta |
 
 ## Detalhes
 
@@ -397,6 +398,7 @@ A tela "Finalize seu cadastro", reproduzida no próprio documento, já pede e-ma
 O documento pede "mudar todas as cores, seguindo a cartela e padrão do IGC". A cartela não está no repositório. Preciso dos valores (hex) e do padrão (tipografia, logo no cabeçalho, se o selo "gov.br" fica). Há logos antigos no histórico do git (`public/images/logo-igc.jpg` e `logo-gov-sp.png` no commit f4594a8; `logoIGC.png` no 4235d72) — confirmar se ainda valem.
 **Bloqueia:** a troca de cores do portal.
 **Andamento (2026-10-08):** o time decidiu seguir a **paleta do portal IDE-SP** (https://www.idesp.sp.gov.br/) com a **logo do IGC** (nunca a do Governo do Estado de SP), em 6 fases na branch `feat/portal-correcoes-cjt`. Fase 1 feita: tokens `brand`, `gray` (neutros do IDE-SP), `areia`, `marca` e a escala de erro em `src/app/globals.css`, fonte Inter, foco por teclado visível e `src/lib/paleta.test.ts` (confere o contraste AA de cada par texto e fundo). A logo usada é a do histórico do repositório (`logoIGC.png`, 176×141 px, commit 4235d72; a do site do IGC é o mesmo desenho em 125×121 px): **provisória**, falta o arquivo em SVG ou PNG de alta resolução. A paleta é a do IDE-SP, não a do IGC (preto, branco e vermelho `#FF161F`): confirmar com o cliente.
+**Resolução:** fases 1 a 6 na branch `feat/portal-correcoes-cjt` (2026-10-08): `216d43a` (tokens, Inter, teste de contraste), `c9acc02` (logo, cabeçalho, barra lateral, logins), `ae64208` (portal), `ea404be` (backoffice), `530fb7b` (estados, etapas, mapas, geometria) e o commit da Fase 6 (auditoria e documentação). Detalhes em [`docs/identidade-visual.md`](docs/identidade-visual.md). A confirmação da paleta ficou na #PEND-57 e a logo definitiva na #PEND-56.
 
 ### #PEND-39 · Decisão: dúvidas do documento de correções de 2026-09-16
 
@@ -563,3 +565,11 @@ O nível de complexidade (#PEND-32) depende de a linha de divisa estar "finaliza
 A logo em uso é provisória: PNG de 176×141 px do histórico do repositório (commit 4235d72; o site do IGC publica o mesmo desenho em JPG de 125×121 px), com fundo branco e sem versão para fundo escuro. Serve no cabeçalho do portal, na barra lateral e nos logins (até ~64 px de altura, sobre fundo claro); maior que isso fica serrilhada. Falta o arquivo definitivo: SVG, ou PNG de pelo menos 600 px de largura com fundo transparente, e uma versão em branco se um dia houver fundo escuro. Trocar é substituir o arquivo (o componente `LogoIgc` e o favicon, gerado a partir da logo, seguem a mesma imagem).
 **Depende de:** o IGC fornecer o arquivo.
 **Relacionada:** #PEND-38 (identidade visual).
+
+### #PEND-57 · Decisão: confirmar com o IGC a paleta (a aplicada é a do IDE-SP)
+
+**Responsável:** negócio · **Tipo:** decisão · **Registrada em:** 2026-10-08
+**Onde:** `src/app/globals.css` (tokens `brand`, `gray`, `areia`, `marca`)
+
+O pedido do cliente é seguir "a cartela e padrão do IGC", que não está no repositório. O time aplicou a paleta do portal IDE-SP (azul-petróleo `#183747` no botão primário, `#2D6986` em links e foco, neutros azulados, faixa bege `#E9E6DD`). A identidade do site do IGC é outra (preto, branco e vermelho `#FF161F`). Se o IGC fornecer a cartela, a troca é local: editar os tokens de `globals.css` e rodar `npm test` (o teste de contraste aponta o que quebrar); nenhum componente usa hex.
+**Relacionada:** #PEND-38 (resolvida), #PEND-56 (logo).

@@ -81,6 +81,7 @@ Fora da lista dos 16, a pedido do time, antes das fases (`f371f7a`): **padrão g
 
 ## 6. Limites conhecidos
 
+- **Cores e logo (item 1 do documento do cliente):** atendidos em 2026-10-08 com a paleta do IDE-SP e a logo do IGC; ver [`identidade-visual.md`](identidade-visual.md). A paleta ainda precisa da confirmação do cliente (#PEND-57) e a logo é provisória (#PEND-56). Os botões e links verdes citados nos textos acima agora são `brand`.
 - **Edição:** o servidor só aceita alteração em rascunho e em `DEVOLVIDA`; a DDD devolve pela ação "Devolver ao solicitante" (#PEND-26, resolvida; ver [`atendimento-cjt-pedidos-restantes.md`](atendimento-cjt-pedidos-restantes.md)).
 - **Status:** a etapa do acompanhamento é derivada do processo e da situação da requisição, agora com as subetapas de Atendimento e Técnico (#PEND-27, resolvida); o Status Geral tem os cinco grupos ativos, inclusive "Não enviadas" e "Arquivadas".
 - **Download da certidão:** a etapa 6 mostra "o download ainda não está disponível" (#PEND-28).

@@ -112,7 +112,7 @@ Erros seguem o padrão `{ error }`. Toda transição de status é condicional (`
 
 ## 5.1 O que fica de fora (dependia de definição do cliente ou de outro dono)
 
-Cores e logos do IGC (#PEND-38), e-mail ou SMS no cadastro (#PEND-37), Bloco 2 do documento (a página em branco), integração com o SEI e a b-Cadastro (#PEND-50 e #PEND-51, adiadas), decisões #PEND-12, #PEND-14 e #PEND-39, e a infra de produção (#PEND-52: agendador, `CRON_TOKEN`, migrations e a ordem com a `9999_postgis_geometry`). As hipóteses que o time assumiu onde o documento é omisso estão nas decisões de negócio abertas: #PEND-53 (duplicidade), #PEND-54 (arquivar não cancela o processo) e #PEND-55 (divisa finalizada e hipóteses do nível).
+E-mail ou SMS no cadastro (#PEND-37), Bloco 2 do documento (a página em branco), integração com o SEI e a b-Cadastro (#PEND-50 e #PEND-51, adiadas), decisões #PEND-12, #PEND-14 e #PEND-39, e a infra de produção (#PEND-52: agendador, `CRON_TOKEN`, migrations e a ordem com a `9999_postgis_geometry`). As hipóteses que o time assumiu onde o documento é omisso estão nas decisões de negócio abertas: #PEND-53 (duplicidade), #PEND-54 (arquivar não cancela o processo) e #PEND-55 (divisa finalizada e hipóteses do nível).
 
 ## 6. Testes
 
